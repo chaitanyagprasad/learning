@@ -1,0 +1,36 @@
+TreeMap
+	TreeMap is a collection of K,V pairs where the collection is sorted in the specified order of keys.
+	If default natural sorting order is used, then the sorting is ascending order of keys. Else, the sorting determined by the comparator.
+	TreeMap is not synchronized internally. 
+	The TreeMap class implements Map interfaces including NavigableMap, SortedMap and extends AbstractMap.
+	TreeMap in Java does not allow null keys (like Map) and thus a NullPointerException is thrown. However, multiple null values can be associated with different keys.
+	All Map.Entry pairs returned by methods in this class and its views represent snapshots of mappings at the time they were produced. They do not support the Entry.setValue() method.
+	
+Constructors in the TreeMap 
+	TreeMap tm = new TreeMap() : Constructs an empty tree map that will be sorted by using the natural order of its keys.
+	TreeMap tm = new TreeMap(Comparator c); Constructs an empty tree-based map that will be sorted by using the Comparator c
+	TreeMap tm = new TreeMap(Map m); Initializes a tree map with the entries from m, which will be sorted by using the natural order of the keys
+	TreeMap tm = new TreeMap(SortedMap sm); Initializes a tree map with the entries from sm, which will be sorted in the same order as sm.
+	
+Differences between HashMap, LinkedHashMap and TreeMap
+	HashMap
+		HashMap offers O(1) lookup and insertion.
+		HashMap is implemented by an array of linked lists.
+		A HashMap contains values based on the key.
+		HashMap contains only unique keys.
+		HashMap may have one null key and multiple null values.
+		HashMap maintains no order.
+		
+	LinkedHashMap
+		LinkedHashMap offers 0(1) lookup and insertion.
+		Keys are ordered by their insertion order.
+		It is implemented by doubly-linked buckets.
+		It is same as HashMap instead maintains insertion order.
+	
+	TreeMap
+		TreeMap offers O(log N) lookup and insertion.
+		Keys are ordered, so if you need to iterate through the keys in sorted order, you can.
+		TreeMap is implemented by a Red-Black Tree.
+		It is same as HashMap instead maintains ascending order(Sorted using the natural order of its key).
+		
+	
