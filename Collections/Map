@@ -1,0 +1,100 @@
+Map(I)
+	Map neither extends Collection interface not the Iterable interface.
+	Map matches unique keys with values like a DB. As long as the key is found, we can fetch the value from it.
+	The get(searchKey) method can be used to fetch the value associated with a searchKey. If searchKey is not present in the map, we get null.
+	To add enteries to the map, we use the put(key,value) method.
+	If we do a put on a map and the key is already present in the map, we override the value in the map.
+	We can also remove an entry from the map with the remove(key) method. If the key is not present, the remove() method will return null.
+	Map operations are similar to CRUD in DB.
+	Map is a generic interface. We specify the key and value types when we create the map. 
+	Map interface has two common implementations. HashMap and TreeMap.
+	HashMap uses hashing to insert values into the map whereas the TreeMap uses ordering.
+	HashMap requires equals() and hashCode() methods to insert and TreeMap needs a Comparator or Comparable to provide ordering.
+	
+Iterating a map
+	While iterating over a map, there are 3 possible ways: a) work with keys alone, b) work with values alone, c) work with the entry
+	The keySet() on the map object returns the set of keys present in the map.
+	The values() on the map object returns the collection of values present in the map.
+	Map interface defines a static inner interface called Entry. Entry defines a single row in the map
+	Since the keys of the map are unique, the enteries of the map are also unique
+	The entrySet() on the map object returns a Set<Map.Entry> present in the map.
+	Once the enrty objects are procures, we can get the key or value or even set a value for a given key.
+	clear(); to clear the map.
+	containskey(searchKey); returns booleans based on whether searchKey is present in map or not.
+	containsValue(searchValue); returns booleans based on whether searchValue is present in map or not.
+	getOrDefault(key, defaultValue); returns a value to a corresponding key if there is one in the map or returns defaultValue if null
+	putifAbsent(key, value); puts value against key if the key doesnt have a value.
+	
+HashMap
+	HashMap is a part of java.util package
+	HashMap implements Serializable and Clonable interface.
+	HashMap doesnt allow duplicate keys but allows duplicate values.
+	HashMap allows null key only once and multiple null values.
+	HashMap doesnt guarantee the order of elements. It may change over time.
+	
+Constructors in HashMap
+	HashMap m = new HashMap(); creates a new HashMap object with initial capacity 16 and load factor 0.75
+	HashMap m = new HashMap(initialCapacity); creates new HashMap object with initial capacity initialCapacity
+	HashMap m = new HashMap(initialCapacity, loadFactor ); creates new HashMap object with initial capacity initialCapacity and load factor loadFactor
+	HashMap m = new HashMap(Map); creates a HashMap object using the enteries of map
+	
+Internal working of a HashMap
+	Hashing
+		Hashing is a process of creating a integer from an object using the hashCode() method.
+		The implementation of the hashCode() for a given object is crucial for the performance of the HashMap.
+		Hash code of a null key will be 0
+	
+	hashCode()
+		hashCode() method is used to get memory reference of the object in integer form.
+		
+	equals()
+		equals() is used to compare whether the objects under consideration are equal or not.
+		equals() method is provided by the Object class
+		It is possible for the user to define his own equals() implementation.
+		HashMap uses equals() to compare the keys.
+		
+	Bucket
+		Bucket is one element of the HashMap object. It is used to store nodes.
+		Multiple nodes can be stored in a single bucket. In that case, nodes will be joined as a linked list.
+		capacityOfMap = numberOfBuckets * loadFactor
+		
+	Index
+		index = hashCode(key) & (n-1) where n is the number of buckets
+		
+Inserting a K,V pair into the empty HashMap		
+	calculate hashCode(k). Let us assume the hashCode is x
+	Calculate the index using x. Let us assume the index is y
+	Create node object using K,V
+	Place the node at y provided there is no other node at y
+	
+Inserting a K,V pain in case of collision
+	calculate hashCode(k). Let us assume the hashCode is x
+	Calculate the index using x. Let us assume the index is y
+	Create node object using K,V
+	Go to the yth index. Assume that there is already a node present there
+	use the hashCode() and equal() to check the keys are equal. If keys are equal, replace the value in the node present.
+	If the keys are not same, link the node to the already existing node.
+	
+Fetching a value based on a key
+	calculate hashCode(k). Let us assume the hashCode is x
+	Calculate the index using x. Let us assume the index is y
+	Go to yth index and compare the key in the node to the key in the argument
+	return the value in the node assuming the keys matched.
+	
+Fetching a value in case of a collided HashMap
+	calculate hashCode(k). Let us assume the hashCode is x
+	Calculate the index using x. Let us assume the index is y
+	Go to yth index and compare the key in the node to the key in the argument
+	traverse the linked list present at index y and return the value where the equals() return true for the key
+	
+Simple implementation of hashmap -> https://www.journaldev.com/146/hashmap-implementation-with-list-in-java
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
