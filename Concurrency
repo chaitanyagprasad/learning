@@ -1,0 +1,57 @@
+Concurrency Model
+	A concurrency model specifies how threads in the the system collaborate to complete the tasks they are are given.
+	Different concurrency models split the tasks in different ways, and the threads may communicate and collaborate in different ways.
+	
+Shared State vs. Separate State
+	One important aspect of a concurrency model is, whether the components and threads are designed to share state among the threads, or to have separate state which is never shared among the threads.
+	Shared state
+		Shared state means that the different threads in the system will share some state among them. By state is meant some data, typically one or more objects or similar.
+		When threads share state, problems like race conditions and deadlock etc. may occur. It depends on how the threads use and access the shared objects, of course.
+	Separate State
+		Separate state means that the different threads in the system do not share any state among them.
+		In case the different threads need to communicate, they do so either by exchanging immutable objects among them, or by sending copies of objects (or data) among them.
+		Thus, when no two threads write to the same object (data / state), you can avoid most of the common concurrency problems.
+		Since you know that only one thread will ever write to a given object. You don't have to worry about concurrent access to that object.
+		Incorporating separate state concurrency makes the systes design harder.
+		
+Parallel Workers
+	In the parallel worker concurrency model a delegator distributes the incoming jobs to different workers.
+	Each worker completes the full job. The workers work in parallel, running in different threads, and possibly on different CPUs.
+	Ex. If the parallel worker model was implemented in a car factory, each car would be produced by one worker. The worker would get the specification of the car to build, and would build everything from start to end.
+	The parallel worker concurrency model is the most commonly used concurrency model in Java
+	
+	Advantages
+		The advantage of the parallel worker concurrency model is that it is easy to understand. To increase the parallelization of the application you just add more workers.
+		
+	Disadvantages
+		As soon as shared state sneaks into the parallel worker concurrency model it starts getting complicated.
+		The threads need to access the shared data in a way that makes sure that changes by one thread are visible to the others
+		Part of the parallelization is lost when threads are waiting for each other when accessing the shared data structures as concurrent data structures are blocking in nature.
+			Use non-blocking data structures.
+			Use persistent data structures.  A persistent data structure always preserves the previous version of itself when modified. Thus, if multiple threads point to the same persistent data structure and one thread modifies it, the modifying thread gets a reference to the new structure. All other threads keep a reference to the old structure which is still unchanged and thus consistent.
+			Problem with persistent data structure is they are low performing.
+		The job ordering is not deterministic.
+		
+Assembly Line
+	The workers are organized like workers at an assembly line in a factory. Each worker only performs a part of the full job. When that part is finished the worker forwards the job to the next worker.
+	Each worker is running in its own thread, and shares no state with other workers. This is also sometimes referred to as a shared nothing concurrency model.
+	Systems using the assembly line concurrency model are usually designed to use non-blocking IO. Non-blocking IO means that when a worker starts an IO operation (e.g. reading a file or data from a network connection) the worker does not wait for the IO call to finish.
+	When the IO operation finishes, the result of the IO operation ( e.g. data read or status of data written) is passed on to another worker.
+	**************************************** understand whats happening here**********************************
+	**************************************** Reactive, Event Driven Systems **********************************
+	**************************************** Actors vs. Channels *********************************************
+	
+	Advantages
+		No shared state. Hence no problems like deadlock and race conditions
+		The workers can keep the state they need to operate in their memory and be stateful
+		Assuming the workers are stateful, we can design better data structures.
+		Since state of the worker is cached, it is cached in the CPU cache of the CPU executing the thread. Thus data retrieval is faster.
+		Job ordering is possible
+		
+	Disadvantages
+		Design is difficult.
+		Debugging the code is difficult as it is difficult to find out which class is executing the code.
+		
+		
+		
+	
