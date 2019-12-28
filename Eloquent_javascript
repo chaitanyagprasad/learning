@@ -55,5 +55,73 @@ Empty values
 	There are two special values, written null and undefined, that are used to denote the absence of a meaningful value. They are themselves values, but they carry no information.
 	Many operations in the language that don’t produce a meaningful value yield undefined simply because they have to yield some value.
 	
+Functions
+	The concept of wrapping a piece of program in a value has many uses. It gives us a way to structure larger programs, to reduce repetition, to associate names with subprograms, and to isolate these subprograms from each other. This is achieved by functions in JS
+	A function definition is a regular binding where the value of the binding is a function.
+	Ex 
+	const square = function(x) {
+		return x * x;
+	};
+	console.log(square(12)) // 144
+	A function is created with an expression that starts with the keyword function. Functions have a set of parameters and a body, which contains the statements that are to be executed when the function is called.
+	A function can have multiple parameters or no parameters at all. 
+	Some functions produce a value and some don’t, whose only result is a side effect. A return statement determines the value the function returns.
+	When control comes across a return statement, it immediately jumps out of the current function and gives the returned value to the code that called the function.
+	A return keyword without an expression after it will cause the function to return undefined. Functions that don’t have a return statement at all similarly return undefined.
+	There are 3 ways to declare a function
+		1. using the declaration notation
+		2. using function expressions
+		3. using arrow functions
+	
+Bindings and scope
+	Each binding has a scope, which is the part of the program in which the binding is visible. 
+	For bindings defined outside of any function or block, the scope is the whole program—you can refer to such bindings wherever you want. These are called global.
+	Bindings created for function parameters or declared inside a function can be referenced only in that function, so they are known as local bindings. Every time the function is called, new instances of these bindings are created. This provides some isolation between functions—each function call acts in its own little world (its local environment) and can often be understood without knowing a lot about what’s going on in the global environment.
+	Bindings declared with let and const are in fact local to the block that they are declared in, so if you create one of those inside of a loop, the code before and after the loop cannot “see” it.
+	Old-style bindings, created with the var keyword, are visible throughout the whole function that they appear in—or throughout the global scope, if they are not in a function.
+	Bindings declares outside a scope will be available inside the scope as well.
+	Blocks and functions can be nested.
+	Each local scope can also see all the local scopes that contain it, and all scopes can see the global scope. This approach to binding visibility is called lexical scoping.
+	
+Functions as values
+	Functions can be bound to variables like other values.
+	A function value can do all the things that other values can do—you can use it in arbitrary expressions, not just call it.
+	It is possible to store a function value in a new binding, pass it as an argument to a function, and so on.
+	Similarly, a binding (variable) that holds a function is still just a regular binding and can, if not constant, be assigned a new value.
+	
+Arrow functions
+	Functions can be denoted in a concise and simpler way using the arrow notation.
+	Ex
+	const power = (base, exponent) => {
+		let result = 1;
+		for (let count = 0; count < exponent; count++) {
+			result *= base;
+		}
+		return result;
+	};
+	The arrow comes after the list of parameters and is followed by the function’s body. It expresses something like “this input (the parameters) produces this result (the body).”
+	When there is only one parameter name, you can omit the parentheses around the parameter list. 
+	If the body is a single expression, rather than a block in braces, that expression will be returned from the function.
+	When an arrow function has no parameters at all, its parameter list is just an empty set of parentheses.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
