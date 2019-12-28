@@ -1,0 +1,123 @@
+Using the console
+	Use the console.log() to print values to the table.
+	Values can be logged directly or using a variable.
+	Use the console.table(<some json>) to print <some json> in tabular format on the console.
+	Use console.error(string x) to print x as an error.
+	Use console.warn(string x) to print x as a warning.
+	Use console.time(string x) and console.timeEnd(string x) to measure the time taken by the code to execute between the time() and the timeEnd() methods.
+	
+Variables and declarations.
+	There are 3 ways to declare variables in JS: var, let and const
+	The var keyword is used to declare variable.
+	If a value is not assigned to a variable when it was declared using the var keyword, then by default, the value stored in that variable is undefined.
+	Variables names cannot start with a number. They can only contain letter, numbers, underscore and dollar sign.
+	The let keyword works similar to the var. The difference is with scoping. The variables declared with var are scoped to the immediate function body and the variables declared with let are scoped to the immediate function block.
+	The const keyword is used to declare variables whose values dont change. If we try to reassign the value of a const variable, we get error.
+	If the const variable is assigned to a object, we can change the values of the properties of the object.
+	
+Datatypes in JS
+	In JS there are 2 types of data: Primitives and Reference
+		Primitives: are stored in the stack and are accessed directly by the variable
+		References: are stored in the heap and are accessed by a reference.
+	There are 6 primitives: String, Number, Boolean, null, Undefined, symbols.
+	References: Arrays, Objects, functions, dates, anything else.
+	Types are associated with values and nor variables. It means that same variable can hold values of different types.
+	The typeof operator can be used to find what is the type of value of a value or a variable.
+	The typeof null errenously returns null.
+	
+Type conversion
+	Type -> String: When we want to convert a different value type to string, wrap it in the String() wrapper
+	String -> Number: We can use the Number() wrapper to convert string to numbers. Additionally we can use parseInt(String x) and parseFloat(String x) methods to convert string to numbers.
+	
+Type Coercion
+	*************** look at mozilla site for details *********************
+	
+Numbers and Math object	
+	Use the Math.PI to get the value of pi as a constant.
+	Use Math.E to get the value of euler's number as a constant.
+	Use Math.round(number) will round up or down
+	Use Math.ceil(number) to round up always.
+	Use Math.floor(number) to round down always.
+	Use Math.sqrt(number) to get square root.
+	Use Math.abs(Number) to get absolute value.
+	Use Math.pow(x,y) to raise x to power y
+	Use Math.min(x,y......z) to get the minimum
+	Use Math.max(x,y......z) to get the maximum
+	Use Math.random() to get the random decimal numbers.
+	
+String and String methods
+	Use the + to concatenate 2 strings.
+	Use += to append a string to another
+	Use \ to escape character
+	Use length property on the string object to count the number of characters in string
+	Use concat(s1, s2) on the string object to concatenate s1 and s2 to a string.
+	Use toUpperCase() an toLowerCase() on the string object to convert a string to uppercase and lowercase respectively.
+	Strings will be treated as character array. We can iterate strings like an array.
+	Use indexOf(char) on the string object to get the first index of char in a string. -1 if char is not present.
+	Use lastIndexOf(char) on the string object to get the last index of char in a string.
+	Use charAt(index) on the string object to get the character present at index in a string.
+	Use substring(start, end) on the string object to get the set of chars from start to end both inclusive.
+	Use slice(start, end) on the string object to get the set of chars from start to end both inclusive. Additionally, clice can take a negative number, slice(-x) and give the last x character.
+	Use split(delimiter) on the string object to turn the string into the array whenever the delimiter occurs in the string.
+	Use replace(old,new) on the string object to replace all occurences of old in the string with new.
+
+Arrays and Array methods.
+	Enclose values in square brackets to create new array.
+	Array can be created using the Array() constructor and pass the values separated by comma into the constructor.
+	We can use values of various types in the array.
+	use the length property on a array object to check the length of array.
+	Use the Array.isArray(x) to check if x is an array.
+	Use push(val) on the array object to append value to the end of the array
+	Use unshift(val) on the array object to append a value in the front
+	Use pop() on the array object to remove the last object from the array
+	Use shift() on the array object to remove the first object from the array
+	Use splice(start, end) on the array object to remove the portion of elements from the array. start and end are 0 based indices.
+	Use reverse() on the array object to reverse the array.
+	Use concat(array2) on the array object to concateneate array2 on the array object.
+	Use sort() on the array object to sort the array. To the sort() pass a lambda function to do the comparision.
+
+Object literals
+	Any key value pairs in JS is treated as an object.
+	Use the dot operator on the object literal followed by key name to get a specific property.
+	We can also get the value associated with property in an object using the square bracket notation.
+	The values in an object can be of any type including arrays and functions.
+	If we want to use the property of an object inside the object, we use the this keyword along with the property.
+
+Dates and times	
+	Use the new Date() to create today's date. The date is a reference type of object.
+	Date object can be converted to string.
+	To the Date() constructor, we can pass a string representing a date and create a date object of the passed value. Ex new Date('MM-dd-YYYY')
+	Use getMonth() on a date object to get the zero based month.
+	Use getDay() on a date object to get a nth day starting from sunday.
+	Use getFullYear() on a date object to get the year.
+	Use getHours() on a date object to get the hour.
+	Use getMinutes() on a date object to get minutes
+	Use getTime() on a date object to get timestamp.
+	We can use the corresponding set methods to achieve the reverse.
+	
+Functions
+	Functions are blocks of code that can be defined and called at a later time or at the same time.
+	Default values for the arguments can be defined while we declare the function. Ex function greet(firstName = 'chai', lastName = 'pras') will take firstName as chai and lastName as pras if no values are provided to the greet function.
+	Functions can pe put into variables. This is called function expression. The function defined using function expressions can be anonymous.
+	Just like declared functions, function expression can also have default argument values.
+	IIFE are functions that are declared and invoked immediately. 
+	IIFE can take argument. Pass the argument to function declaration and call.
+	Functions can also be put inside object. Then it is called a method.
+	
+Window object
+	Window is the global object in client side JS.
+	Window is the runtime for browser for JS.
+	Use prompt() on window object to collect input from the user and save the input in the variable.
+	Use confirm() on window object to take a confirmation. The confirm() returns a boolean based on the user click.
+	Use outerHeight and outerWidth properties on window object to get the height and width of the window with the scrollbar.
+	Use innerHeight and innerWidth properties on window object to get the height and width of the window without the scrollbar.
+	Use the location property on the window object to get the location of the host.
+	Use the history object on the window object to navigate the history of the session.
+	history.go(int x) => x<0 backword direction by that many sites.
+	history.length will give total sites visited in session.
+	The navigator object on the window object gives details about the browser, OS and user hardware.
+
+Block scope with let and const
+	check whats with this
+	
+	

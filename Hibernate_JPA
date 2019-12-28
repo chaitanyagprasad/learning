@@ -1,0 +1,47 @@
+Hibernate and ORM
+	Hibernate is a ORM framework that implements JPA specification.
+	The main goal of Hibernate is to provide objects with metadata that makes persistence of the state of the application easier without writing and sql statements.
+	HQL is used to query objects and it is similar to SQL.
+	There are 3 steps to use and configure Hibernate.
+		1. Configure Hibernate
+		2. Create entities using annotations.
+		3. Obtain a session from the SessionFactory and invoke persistence methods.
+
+ORM
+	Persistence refers to the characteristic of state that outlives the process that created the state.
+	Persistence mostly involves working with a RDBMS.
+	RDBMS is a collective set of multiple data organized by tables, records (rows) and columns.
+	Records in tables can be associated by keys(primary and foreign)
+	The keys also help in forming functional dependencies between records of tables.
+	Data model is a structure in place that specifies how we are going to store our data.
+	Object model is one class for each table in the data table. There will be one member variable of the class that corresponds to each field in the data model.
+	There will be discrepancies that exist between the object model and data model.
+		In a data model we use the primary key to uniquely identify the record and in object model we use the equals()
+		In the data model we use foreign keys to relate two records and in the object model, we use object references to associate two objects.
+		In data model we use joins to navigate the associations and in the object model, we use the getters and setters.
+		There is no concept of inheritence in data model whereas the object model has inheritence.
+	Along with the discrepancies between data model and object model, we also find certain challenges with JDBC.
+		Error handling in JDBC
+		Key managements in JDBC
+		Implementation inconsistancies in JDBC
+		Verbose code.
+	ORM solves the above mentioned problems
+		Reduces persistence code, development time and maintenance.
+		Bridges gap between data model and object model.
+		Removes most of the SQL from the application logic.
+		Helps build a better persistence layers.
+		ORM has sound key managements
+		Consistent implementation throughout teams.
+	ORM addresses the problems that is caused by JDBC.
+
+Field and property access
+	Hibernate can use field access or property access to fetch values from an entity.
+	Field access means, Hibernate has direct access to the private field of an entity class.
+	Property access means that Hibernate will use the getters and setters to get access to the field.
+	We can tell Hibernate what kind of access to use.
+		1. If we want to use property access, annotate the getters and setters with the required annotations. If we want to use field access, directly annotate the fields of the entity class.
+		2. Use the @Access annotation and set the value on the @Access to field or property.
+	
+@Column
+	Use the @Column annotation on a field in the entity class to create a database column.
+	

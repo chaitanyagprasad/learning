@@ -1,0 +1,72 @@
+Singleton
+	Singleton is a design pattern where there is only one object of the class is present  and provides a global point of access to it..
+	Singletons are used in thread pools, cache, dialog boxes etc in places where we have resource constraints and inconsistent results.
+	
+Dissecting a singleton class
+	Consider the class Singleton
+	public class Singleton {
+		private static Singleton uniqueInstance;
+		private Singleton() {
+
+		}
+		public static Singleton getInstance() {
+			if (uniqueInstance == null){
+				uniqueInstance = new Singleton();
+			}
+			return uniqueInstance;
+		}
+	}
+	It has 3 important characteristics
+		private constructor -> to prevent creation of new object from outside the Singleton class.
+		private static Singleton object uniqueInstance -> only the uniqueInstance object should be available. Hence it is marked static and made available outside Singleton class.
+		Public static method getInstance() -> to return uniqueInstance if present or to return new Singleton if uniqueInstance is not present.
+	In singleton class lazy instantiation of the singleton object happens. So until a Singleton object is asked for, it is not created.
+	Singleton class can have other member variable and methods
+	Singleton solution fails when there are multiple threads try to access the uniqueInstance.
+	
+How to make Singleton class thread safe?
+	Our multithreading woes are almost trivially fixed by making getInstance() a synchronized method. Example
+	public class Singleton {
+		private static Singleton uniqueInstance;
+		private Singleton() {
+
+		}
+		public static synchronized Singleton getInstance() {
+			if (uniqueInstance == null){
+				uniqueInstance = new Singleton();
+			}
+			return uniqueInstance;
+		}
+	}
+	Problem with the above implementation is that synchronizing is expensive operation.
+	There are 3 options to deal with the expense of synchronizing the Singleton class.
+		1. If calling the getInstance() method isn’t causing substantial overhead for your application, forget about it.
+		2. If your application always creates and uses an instance of the Singleton or the overhead of creation and runtime aspects of the Singleton are not onerous, you may want to create your Singleton eagerly. Using this approach, we rely on the JVM to create the unique instance of the Singleton when the class is loaded. The JVM guarantees that the instance will be created before any thread accesses the static uniqueInstance variable.
+			public class Singleton {
+				private static Singleton uniqueInstance = new Singleton(); // eager creating
+				private Singleton() {
+
+				}
+				public static synchronized Singleton getInstance() {
+					return uniqueInstance; 
+				}
+			}
+		3. Double locking: With double-checked locking, we first check to see if an instance is created, and if not, THEN we synchronize. This way, we only synchronize the first time through, just what we want.
+			public class Singleton {
+				private volatile static Singleton uniqueInstance;
+				private Singleton() {
+
+				}
+				public static Singleton getInstance() {
+					if (uniqueInstance == null){
+						synchronized(Singleton.class) { // double checking lock
+							if(uniqueInstance == null) {
+								uniqueInstance = new Singleton();
+							}
+						}            
+					}
+					return uniqueInstance;
+				}
+			}
+	
+

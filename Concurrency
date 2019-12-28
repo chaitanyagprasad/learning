@@ -52,6 +52,12 @@ Assembly Line
 		Design is difficult.
 		Debugging the code is difficult as it is difficult to find out which class is executing the code.
 		
+Functional parallelism
+	The basic idea of functional parallelism is that you implement your program using function calls. 
+	Functions can be seen as "agents" or "actors" that send messages to each other, just like in the assembly line concurrency model. When one function calls another, that is similar to sending a message.
+	All parameters passed to the function are copied, so no entity outside the receiving function can manipulate the data. This copying is essential to avoiding race conditions on the shared data. This makes the function execution similar to an atomic operation. Each function call can be executed independently of any other function call.
+	When each function call can be executed independently, each function call can be executed on separate CPUs. That means, that an algorithm implemented functionally can be executed in parallel, on multiple CPUs.
+	
 		
 		
 	

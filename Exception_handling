@@ -1,0 +1,59 @@
+Introduction
+	Exception is a unexpected interruption to the normal flow of execution.
+	Purpose of exception handling is graceful termination of the program. We should not lose anything.
+	Defining alternative way to continue rest of program is the concept of exception handling
+	
+Runtime stack mechanism
+	For every thread JVM will create a runtime stack. Every method call performed by the trhead will be stored in the runtime stack.
+	Each entry in the stack is called as activation record.
+	After each method succesfully completes, the entry from the runtime stack will be removed. After all methods are completed, the JVM deletes the stack.
+	
+Default exception handling in Java
+	Whenever an exception occurs in a thread, the method in which the exception occurs is responsible to create exception object by including the name, description, method location and hands over the object to JVM.
+	JVM then terminates the method that caused the exception abnormally. Then the control will go to the method that invoked the next activation record. This continues till the JVM terminates the main().
+	When JVM terminates main(), the default exception handler prints the exception to the console.
+	If at least one method is terminated abnormally, then program is terminated abnormally.
+	
+Exception Hierarchy
+	Throwable class acts as the root class for all exception.
+	Throwable class contains 2 child classes. 
+		Exception class
+			Exceptions are caused by program.
+			Exceptions are recoverable.
+		Error class
+			Errors are not caused by program. They are caused by lack of system resources.
+			Errors are not recoverable and program will be terminated abnormally
+	
+	Exception has many child classes.
+	
+Checked and unchecked exceptions.
+	Every exception occurs only at runtime whether it is checked or unchecked.
+	The exception checked by compiler for smooth execution of the program at runtime is called checked exception.
+	If checked exception are not caught, we get compile time error.
+	Checked exceptions must be compulsarily handled using either try/catch block or by throws keyword.
+	The exception not checked by the compiler is called unchecked exceptions.
+	All errors and its child classes, Runtime exception and its child classes are unchecked. Except these, remaining are checked.
+	
+Fully checked vs partially checked exceptions.
+	A checked exception is said to be fully checked if all its children is also checked Ex. IOException. It is partially checked exception if otherwise. 
+	The only possible partially checked exception in Java are Exception and Throwable.
+	
+Customized exception handling using try/catch
+	Risky code is always is wrapped inside the try block. Corresponding handling code is to be written in catch block. 
+	Statements which run into exception and it is not part of try block, then the program will abnormally terminate.
+	All statements after catch block are also executed.
+	Within try block, anywhere an exception raises, then rest of try block wont be executed. Hence within try block, only take risky code and length of try block must be as less as possible.
+	Exception may be inside catch and finally blocks too.
+	
+Methods to print exception information
+	Throwable class defines the following methods to print exception
+	printStackTrace() => name of exception, description and location.
+	toString() => name of exception, description
+	getMessage() => description only.
+	Internally, default exception handler will use printStackTrace().
+	
+Try with multiple catch block.
+	Way of handling exception varies from exception to exception. Hence, we can have multiple catch block for different type of exception occuring in the risky code.
+	While using multiple catch blocks, the order of catch block matters. Child exception must be handled first, then parent. Otherwise we get compile time error.
+	
+	
