@@ -56,4 +56,61 @@ Try with multiple catch block.
 	Way of handling exception varies from exception to exception. Hence, we can have multiple catch block for different type of exception occuring in the risky code.
 	While using multiple catch blocks, the order of catch block matters. Child exception must be handled first, then parent. Otherwise we get compile time error.
 	
+final keyword	
+	final keyword is a modifier applicable for classes, methods and variables.
+	If a class is declared as final, we cant create subclasses from it ie we cant extend that class ie inheritence is not possible.
+	If a method is declared as final, we cant override that method in the child class.
+	If a variable is declared as final, we cant reassign any other value to it.
+	
+finally keyword.
+	finally is a block, always associated with the try/catch block to perform clean up code.
+	finally block will be executed always whether exception occurs or not and whether the exception is handled or not.
+	Ex.
+	try {
+		risky code
+	} catch( Exception e) {
+		handling code
+	} finally {
+		clean up code
+	}
+	finally block will perform clean up activities opened as part of its corresponding try block.
+	
+finalize keyword:
+	finalize is a method that is executed by an object just before the object is collected for garbage collection.
+	Once the finalize method is completed, GC can destroy the object.
+	finalize method is invoked by GC.
+	finalize method is used to perform cleanup activities opened by corresponding object.
+	
+Various possible combinations of try/catch finally.
+	1. try/catch(Exception e) => possible
+	2. try/catch(Exception e)/catch(Exception f) => possible
+	3. try/catch(Exception e)/catch(Exception e) => not possible ie compile time error
+	4. try/catch(Exception e)/finally => possible
+	5. try/finally => possible. program terminates abnormally but performs clean up
+	6. try/catch(Exception e)/try/catch(Exception e) => possible
+	7. try/catch(Exception e)/try/finlly => possible
+	8. try => not possible ie compile time error.
+	9. catch(Exception e) => not possible ie compile time error
+	10. finally => not possible
+	11. try/finally/catch(Exception e) => not possible. order important ie compile time error.
+	12. for try catch and finally blocks, curly braces are mandatory.
+	
+	In try/catch/finally order is important.
+	Whenever we write try block, we must write catch or finally block else we get compile time error.
+	Whenever we write catch block, compulsary try block must be required ie catch without try is invalid
+	Whenever we write finally block, compulsary try block must be required ie finally without try is invalid
+	Inside try, catch and finally we can nest try catch and finally blocks.
+	For try catch and finally blocks, curly braces are mandatory.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
