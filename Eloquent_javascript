@@ -1,0 +1,59 @@
+Values in Javascript
+	A computer has trillions of bits stored. To be able to work with such quantities of bits without getting lost, we must separate them into chunks that represent pieces of information. In a JavaScript environment, those chunks are called values.
+	Every value has a type that determines its role. Some values are numbers, some values are pieces of text, some values are functions, and so on.
+	To create a value, you must merely invoke its name. They are not really created from thin air, of course. Every value has to be stored somewhere, and if you want to use a gigantic amount of them at the same time, you might run out of memory. 
+	As soon as you no longer use a value, it will dissipate, leaving behind its bits to be recycled as building material for the next generation of values.
+	
+Numbers
+	Values of the number type are numeric values.
+	JavaScript uses 64 bits to store a single number value.
+	There are only so many patterns you can make with 64 bits, which means that the number of different numbers that can be represented is limited.
+	With N decimal digits, you can represent 10 power N numbers. Similarly, given 64 binary digits, you can represent 2 power 64 different numbers, which is about 18 quintillion (an 18 with 18 zeros after it).
+	The 18 quintillion bits are also used to store fractions, negative numbers along with integers. Some bits are used to represent the sign of the number and some bits are also used to represent the position of the decimal point.
+	The actual maximum whole number that can be stored is more in the range of 9 quadrillion (9 followed by 15 zeros)
+	Calculations with whole numbers (also called integers) smaller than the aforementioned 9 quadrillion are guaranteed to always be precise.
+	
+Arithmetic
+	The main thing to do with numbers is arithmetic. Arithmetic operations such as addition or multiplication take two number values and produce a new number from them.
+	The + and * symbols are called operators. The first stands for addition, and the second stands for multiplication. Putting an operator between two values will apply it to those values and produce a new value. For subtraction, there is the - operator, and division can be done with the / operator.
+	When operators appear together without parentheses, the order in which they are applied is determined by the precedence of the operators. Use PEMDAS rule.
+	When multiple operators with the same precedence appear next to each other, as in 1 - 2 + 1, they are applied left to right: (1 - 2) + 1.
+	There is one more arithmetic operator, which you might not immediately recognize. The % symbol is used to represent the remainder operation. X % Y is the remainder of dividing X by Y. 
+	The remainder operator’s precedence is the same as that of multiplication and division. You’ll also often see this operator referred to as modulo.
+	
+Special Numbers
+	There are three special values in JavaScript that are considered numbers but don’t behave like normal numbers.
+	The first two are Infinity and -Infinity, which represent the positive and negative infinities. Infinity - 1 is still Infinity, and so on.
+	NaN stands for “not a number,” even though it is a value of the number type. You’ll get this result when you, for example, try to calculate 0 / 0 (zero divided by zero), Infinity - Infinity, or any number of other numeric operations that don’t yield a meaningful result.
+	
+Strings
+	Strings are used to represent text. They are written by enclosing their content in quotes.
+	You can use single quotes, double quotes, or backticks to mark strings, as long as the quotes at the start and the end of the string match. Almost anything can be put between quotes, and JavaScript will make a string value out of it.
+	whenever a backslash (\) is found inside quoted text, it indicates that the character after it has a special meaning. This is called escaping the character. A quote that is preceded by a backslash will not end the string but be part of it. 
+	Strings, too, have to be modeled as a series of bits to be able to exist inside the computer. The way JavaScript does this is based on the Unicode standard. 
+	The Unicode standard assigns a number to virtually every character you would ever need, including characters from Greek, Arabic, Japanese, Armenian, and so on. If we have a number for every character, a string can be described by a sequence of numbers.
+	JavaScript’s representation uses 16 bits per string element, which can describe up to 2 power 16 different characters.
+	Strings cannot be divided, multiplied, or subtracted, but the + operator can be used on them. It does not add, but it concatenates—it glues two strings together.
+	Strings written with single or double quotes behave very much the same—the only difference is in which type of quote you need to escape inside of them. 
+	Backtick-quoted strings, usually called template literals, can do a few more tricks. When you write something inside ${} in a template literal, its result will be computed, converted to a string, and included at that position. 
+	
+Comparision
+	The > and < signs are the traditional symbols for “is greater than” and “is less than,” respectively. They are binary operators. Applying them results in a Boolean value that indicates whether they hold true in this case.
+	The way strings are ordered is roughly alphabetic but not really what you’d expect to see in a dictionary: uppercase letters are always “less” than lowercase ones, so "Z" < "a".
+	When comparing strings, JavaScript goes over the characters from left to right, comparing the Unicode codes one by one.
+	Other similar operators are >= (greater than or equal to), <= (less than or equal to), == (equal to), and != (not equal to).
+	There is only one value in JavaScript that is not equal to itself, and that is NaN (“not a number”). NaN is supposed to denote the result of a nonsensical computation, and as such, it isn’t equal to the result of any other nonsensical computations.
+	
+Logical operators
+	There are also some operations that can be applied to Boolean values themselves. JavaScript supports three logical operators: and, or, and not. These can be used to “reason” about Booleans.
+	The && operator represents logical and. It is a binary operator, and its result is true only if both the values given to it are true.
+	The || operator denotes logical or. It produces true if either of the values given to it is true.
+	Not is written as an exclamation mark (!). It is a unary operator that flips the value given to it—!true produces false, and !false gives true.
+	You can usually get by with knowing that of the operators we have seen so far, || has the lowest precedence, then comes &&, then the comparison operators (>, ==, and so on), and then the rest.
+	
+Empty values
+	There are two special values, written null and undefined, that are used to denote the absence of a meaningful value. They are themselves values, but they carry no information.
+	Many operations in the language that don’t produce a meaningful value yield undefined simply because they have to yield some value.
+	
+	
+	
