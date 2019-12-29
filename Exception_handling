@@ -290,4 +290,32 @@ throws keyword
 		}    
 	}
 	
+Exception handling keywords summary
+	1. try => to maintain risky code inside the block
+	2. catch => to maintain exception handling code
+	3. finally => to maintain clean up code
+	4. throw => to manually handover created exception object to JVM
+	5. throws => to delegate exception handling responsibility to the caller method.
+
+User defined exceptions	
+	To meet programming requirements, we can write our own exception. This is called user defined exception.
+	Every exception is a java class and it must be a child class of Throwable class.
+	Example
+	public class Test {
+		static int balance = 15000;
+		public static void main(String[] args) {    
+		  int drawableAmount = Integer.parseInt(args[0]);
+		  if ( drawableAmount > balance )  {
+			throw new InsufficientFundsException("Insufficient funds");
+		  }
+		}    
+	}
+	class InsufficientFundsException extends RuntimeException {
+		InsufficientFundsException(String s) {
+			super(s); // to make description available to printStackTrace of Throwable class
+		}
+	}
+	
+	The throw keyword is best suitable for user defined exceptions but not for pre defined exceptions.
+	It is highly recommended to extend custom exception with RuntimeException so that compiler doesnt object.
 	
