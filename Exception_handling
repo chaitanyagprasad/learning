@@ -148,11 +148,146 @@ Case 3:
 	
 	With the throw keywords, we can only use objects which are children of Throwable class and not any Java object.
 	
+throws keyword
+	If in our code, there is a possibility of rising checked exception, then compiler wont compile the code until the checked exception is handled.
+	public class Test{
+		public static void main(String[] args) {
+			PrintWriter pw = new PrintWriter("abc.txt"); // compile time error => checked exception must be handled
+			pw.println("Hello");
+		}
+	}
+	There are 2 ways to handle this problem. 
+		a) try/catch block 
+		public class Test{
+			public static void main(String[] args) {
+				try {
+					PrintWriter pw = new PrintWriter("abc.txt");
+					pw.println("Hello");
+				}catch (Exception e) {
+					System.out.println(e);
+				}
+			}
+		}
+		
+		b) throws keyword: It is used to delegate the responsibility of exception handling to the caller of the method. The caller may be JVM or another method in the method stack 
+		public class Test{
+			public static void main(String[] args) throws Exception {
+				PrintWriter pw = new PrintWriter("abc.txt");
+				pw.println("Hello");
+			}
+		}
+	The throws keyword is useful only for checked exception. For unchecked exception is meaningless.
+	The throws keyword is needed to convince the compiler. Usage of throws doesnt prevent abnormal termination of program.
+	Example
+	public class Test{
+		public static void main(String[] args) {
+			doStuff();
+		}
+		public static void doStuff() {
+			doMoreStuff();
+		}
+		public static void doMoreStuff() {
+			Thread.sleep(10000); //compile time error => Unhandled exception type InterruptedException
+		}
+	}
 	
+	public class Test{
+		public static void main(String[] args) {
+			doStuff();
+		}
+		public static void doStuff() {
+			doMoreStuff(); //compile time error => Unhandled exception type InterruptedException
+		}
+		public static void doMoreStuff() throws InterruptedException {
+			Thread.sleep(10000);
+		}
+	}
 	
+	public class Test{
+		public static void main(String[] args) {
+			doStuff(); //compile time error => Unhandled exception type InterruptedException
+		}
+		public static void doStuff() throws InterruptedException {
+			doMoreStuff();
+		}
+		public static void doMoreStuff() throws InterruptedException {
+			Thread.sleep(10000);
+		}
+	}
 	
+	public class Test{
+		public static void main(String[] args) throws InterruptedException {
+			doStuff();
+		}
+		public static void doStuff() throws InterruptedException {
+			doMoreStuff();
+		}
+		public static void doMoreStuff() throws InterruptedException {
+			Thread.sleep(10000);
+		}
+	}
 	
+	public class Test{
+		public static void main(String[] args) throws InterruptedException {
+			doStuff();
+		}
+		public static void doStuff()  {
+			doMoreStuff();
+		}
+		public static void doMoreStuff()  {
+			Thread.sleep(10000); //compile time error => Unhandled exception type InterruptedException as there is no delegation to caller method
+		}
+	}
 	
+	public class Test{
+		public static void main(String[] args) throws InterruptedException {
+			doStuff();
+		}
+		public static void doStuff()  {
+			doMoreStuff(); //compile time error => Unhandled exception type InterruptedException as there is no delegation to caller method
+		}
+		public static void doMoreStuff() throws InterruptedException {
+			Thread.sleep(10000);
+		}
+	}
 	
+	The throws can be used on method level and constructor level. The throws keyword is not valid for classes.
+	
+	The throws keyword is only applicable for Throwable and its children and not for other java objects.
+	Example
+	public class Test{
+		public static void main(String[] args) throws Test {    // compile time error =>  an exception type must be a subclass of Throwable    
+		}    
+	}
+	Correct as follows
+	public class Test extends RuntimeException{
+		public static void main(String[] args) throws Test {        
+		}    
+	}
+	
+	Consider 
+	public class Test {
+		public static void main(String[] args) {    
+			throw new Exception();  // compile time error => Unhandled exception type Exception 
+		}    
+	}
+	Exception class is checked and compiler complains because compiler will only consider checked exception.
+	public class Test {
+		public static void main(String[] args) {    
+			throw new Error(); // runtime exception   
+		}    
+	}
+	
+	If there is no chance of rising a particular exception and we write catch block for that particular exception, we get compile time error.
+	This rule is applicable for fully-checked exception
+	public class Test {
+		public static void main(String[] args) {    
+			try {
+				System.out.println("hello");
+			}catch(IOException e) { // compile time error => This exception is never thrown from the try statement body
+
+			}
+		}    
+	}
 	
 	
