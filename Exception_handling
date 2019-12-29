@@ -102,9 +102,51 @@ Various possible combinations of try/catch finally.
 	Inside try, catch and finally we can nest try catch and finally blocks.
 	For try catch and finally blocks, curly braces are mandatory.
 	
+throw keyword
+	Sometimes, we can create exception object explicitly and handover to the JVM manually.
+	The throw keyword is used to hand over the created exception object manually to the JVM.
+	By default, the method where the exception occurs is responsible to create the exception object and handover to JVM. In case of manual handover, the programmer is responsible to create exception object.
+	The throw keyword is best used for creating user defined exception.
 	
+Case 1: 
+	public class Test{
+		static ArithmeticException e = new ArithmeticException();
+		public static void main(String[] args) {
+			throw e; // ArithmeticException as e has been pointed to ArithmeticException object
+		}
+	}
 	
+	public class Test{
+		static ArithmeticException e;
+		public static void main(String[] args) {
+			throw e; // NullPointerException as static variable e is null
+		}
+	}
 	
+Case 2:
+	public class Test{
+		public static void main(String[] args) {
+			System.out.println(10/0); // runtime exception
+			System.out.println("Hello");
+		}
+	}
+	
+	public class Test{
+		public static void main(String[] args) {
+			throw new ArithmeticException();
+			System.out.println("Hello"); // compilt time error => unreachable error
+		}
+	}
+	After throw statement, we cant have any statement directly
+	
+Case 3:
+	public class Test{
+		public static void main(String[] args) {
+			throw new Test(); // compile time error => incompatible type exception
+		}
+	}
+	
+	With the throw keywords, we can only use objects which are children of Throwable class and not any Java object.
 	
 	
 	
