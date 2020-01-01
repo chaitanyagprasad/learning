@@ -42,6 +42,155 @@ Field and property access
 		1. If we want to use property access, annotate the getters and setters with the required annotations. If we want to use field access, directly annotate the fields of the entity class.
 		2. Use the @Access annotation and set the value on the @Access to field or property.
 	
-@Column
-	Use the @Column annotation on a field in the entity class to create a database column.
+
+
+
+
+=================================================== book JPA Hibernate cookbook ===========================================================
+
+Drawbacks of JDBC
+	With JDBC, the developer has to do additional work such as
+		Open a DB connection
+		Maintain a open connection
+		Build a query
+		Execute a query
+		Getting a response to a query
+		Mapping query output with custom class
+		Closing the connection
+	We use ORM tools to avoid the above problems.
+	To avoid this hectic process, we can use the ORM tools available in the market. It works as a bridge between the application and database by simplifying the communication between them.
+
+Benefits of ORM
+	Reduces development time and cost.
+	Provides portability. Hibernate supports multiple databases, so there is no need to write a database-specific code. This is achieved by Hibernate's dialect.
+
+Useful features of Hibernate
+	Code reusability.
+	Transaction management
+	Efficient collections/custom class mappings.
+	Caching mechanism support in Hibernate
+
+Creating Hibernate persistent class
+	We are to create a Java class that will represent a DB table. The Java class must have the following requirements
+		1. It needs to have a default constructor that is persistent.
+		2. It should contain the id attribute. ID is used to identify the object and is mapped with the primary column of a table.
+		3. All attributes should have Getter and Setter methods.
 	
+	Consider the following table. Its persistent class will be as follows
+	 __________
+	| Employee |
+	|__________|
+	|	id	   |
+	|	name   |
+	|	salary |
+	|__________|
+
+	public class Employee {
+		private long id;
+		private String name;
+		private long salary;
+		Employee() {}
+		// getters and setters
+	}
+
+	POJOs can have reference to other object as well
+
+	 __________		 _______________
+	| Employee |	|	Department	|
+	|__________|	|_______________|
+	|	id	   |	|		id		|
+	|	name   |	|		name	|
+	|	salary |	|_______________|
+	|	dept   |	
+	|__________|	
+
+	public class Department {
+		private long id;
+		private String name;
+		Department() {}
+		// getters and setters
+	}
+
+	public class Employee {
+		private long id;
+		private String name;
+		private long salary;
+		private Department dept;
+		Employee() {}
+		// getters and setters
+	}
+
+Providing annotation based Hibernate mapping.
+	Consider
+
+	@Entity
+	@Table(name = "employee")
+	public class Employee {
+
+		@Id
+		@Column(name = "id")
+		@GeneratedValue(strategy = GenerationType.AUTO)
+		private long id;
+
+		@Column(name="name")
+		private String name;
+
+		@Column(name = "salary")
+		private long salary;
+
+		Employee() {}
+		// getters and setters
+	}
+
+	@Entity: This annotation declares the class as an entity bean.
+	@Table: We can set this annotation at the class level only. You can provide the name attribute, which is considered as a database table name. You can also just write @Table without any attribute; in this case, the class name is considered as a table name by hibernate.
+	@Id: This annotation declares the property to be an identifier property, and this is used as a primary key for the table.
+	@Column: This annotation is used to define the column for the table. Here, we used name="id", meaning that hibernate considers the column name to be "id". You can also write @Column without any attributes; in this case, the property name is considered to be a column name for the table.
+	@GeneratedValue: Using this annotation, we can provide information to hibernate on how to generate a value for the primary key column. Here, we will use strategy = GenerationType.AUTO, which means that hibernate uses the autoincrement value for the id column. If not provided, hibernate uses the most appropriate generation strategy.
+	
+	Let us try to reference a different object in the Employee class
+
+	@Entity
+	@Table(name = "employee")
+	public class Employee {
+
+		@Id
+		@Column(name = "id")
+		@GeneratedValue(strategy = GenerationType.AUTO)
+		private long id;
+
+		@Column(name="name")
+		private String name;
+
+		@Column(name = "salary")
+		private long salary;
+
+		@JoinColumn(name = "department")
+		@ManyToOne
+		private Department dept;
+
+		Employee() {}
+		// getters and setters
+	}
+
+	@Entity
+	@Table(name = "department")
+	public class Department {
+
+		@Id
+		@Column(name = "id")
+		@GeneratedValue(strategy = GenerationType.AUTO)
+		private long id;
+
+		@Column
+		private String name;
+		Department() {}
+		// getters and setters
+	}
+
+	@JoinColumn: This annotation notifies hibernate that this is a reference column.
+	@ManyToOne: This annotation defines the relation between the referenced tables. Here, we have used many-to-one, meaning that one department can be mapped with multiple employees.
+
+
+
+
