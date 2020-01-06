@@ -191,6 +191,105 @@ Providing annotation based Hibernate mapping.
 	@JoinColumn: This annotation notifies hibernate that this is a reference column.
 	@ManyToOne: This annotation defines the relation between the referenced tables. Here, we have used many-to-one, meaning that one department can be mapped with multiple employees.
 
+SessionFactory
+	SessionFactory is a factory of sessions. It has the following features.
+		It's an interface implemented using the singleton pattern.
+		It's created using the configuration provided by the configuration file.
+		It's thread-safe, so it's created once during the application's lifetime, and multiple users or threads can access it at the same time without any concurrency issue.
+		As a SessionFactory object is immutable, changes made to the configuration will not affect the existing factory object.
+		It's a factory class, and its main duty is to create, manage, and retrieve a session on request. A Session is used to get a physical connectivity with the database.
 
+Creating a SessionFactory object
+	Consider the code
+
+	Configuration configuration = new Configuration(); // creates a blank configuration.
+	configuration = configuration.configure(); // fetch properties defined in hibernate.properties file	
+	StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder(); // create a builder object
+	builder = builder.applySettings(configuration.getProperties()); // provide settings to builder object
+	SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build()); // create sessionFactory object using builder
+
+	We can create two different builder objects if we want to connect to 2 different databases and we can create two different SessionFactory objects.
+
+Opening a session
+	A Session is also known as an interface that is used to get a physical connectivity with a database.
+	It is instantiated every time we need to interact with the database for the CRUD (Create, Read, Update, Delete) operations.
+	Persistent objects always travel from the application to the database and vice versa only through the Session.
+	To open a session, we can call the openSession() method on the sessionFactory object. This method returns a Session object and it opens the database connection when it is created and holds it until the session is closed.
+	A Session created using the openSession() method is not associated with any thread, so it's our responsibility to flush or close it once we are done with the database operation.
+	A Session is a bridge between the Java application and hibernate. The Session interface wraps the JDBC connection.
+	A Session always tries to be in sync with the persistent store where all transactions are made.
+	A Session is always a part of first-level cache; it caches all the objects that are transmitted through that particular session. All cached objects will be destroyed once this session is closed.
+
+Transforming a result
+
+Projections
+
+Basic annotations
+	Annotation is used to provide a metadata of code. 
+	It is a part of the code file itself. 
+	It is used to give some extra information about the code and can be used with variables, method packages, the interface, or the class itself.
+
+@Entity and @Table
+	Hibernate considers the class as a persistent class if it is annotated with the @Entity annotation.
+	We annotate a class, Employee, with the @Entity annotation. As a result, hibernate considers the current class eligible to be persisted.
+
+	@Entity
+	public class Employee {
+	// Fields and getter/setter
+	}
+
+	If we want a user-defined table name rather than a default name, we can use the @Table annotation.
+
+	@Entity
+	@Table(name="tbl_employee")
+	public class Employee {
+	// Fields and getter/setter
+	}
+
+	The attribute uniqueConstraints can also be used with @Table annotation. It is used when we need the UNIQUE key constraint with multiple fields.
+
+	@Entity
+	@Table(name = "tbl_employee", uniqueConstraints = @UniqueConstraint(columnNames = { "id" , "empCode"}))
+	public class Employee {
+		@Id
+		private long id;
+		@Column
+		private String empCode;
+	}
+
+	When a SessionFactory is created for the first time and property hbm2ddl.auto is set to create, hibernate will create a table and the unique key constraints.
+	When the table is created using the preceding code, hibernate will create the UNIQUE key using two fields: id and empCode.
+	The uniqueConstraints is useful when we need a UNIQUE constraint for multiple fields. For only one column, you can use the @Column(unique=true) annotation directly on the field.
+
+@Column 
+	@Column annotation is used to tell hibernate that a property in the entity class is going to behave as a column in the database.
+
+	@Entity
+	public class Employee {
+		@Column
+		private String empCode;
+	}
+
+	If we need a custom column name, we can use the name attribute
+	The length attribute is used to provide the column with a maximum size. If length is not provided, the default size of the data type is used, and it is database-specific.
+	The nullable attribute accepts a Boolean value. If nullable is true, it means that the column contains a NULL value. It does not accept NULL if the value of nullable is set to false, but the default value of nullable is true.
+	The unique attribute also accepts a Boolean value. If unique is set to true, hibernate will create a column with a UNIQUE index. However, the default value is false.
+
+@Id and @IdClass
+	It's necessary to declare an Identity column in each class while developing with hibernate.
+	Sometimes, when we need to declare a primary key as a combination of multiple columns, we call this the composite primary key, as the primary key is composed of multiple columns.
+	To declare a column as a primary key column, we use the @Id annotation. Hibernate creates a primary key column and also adds the primary key index to it.
+	To create a composite key using multiple columns, annotate all the columns which will be part of composite key with @Id annotation and annotate the entity class with @IdClass annotation
+
+	@Entity
+	@IdClass(Employee.class)
+	public class Employee implements Serializable {
+		@Id
+		private String firstName;
+		@Id
+		private String phone;
+	}
+
+	Another thing that needs to be taken care of is that the entity class must implement Serializable if you plan to store the entity in any cache, session, or you wish to transfer the entity over wire. 
 
 
