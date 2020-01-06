@@ -408,6 +408,7 @@ Synchronization
 	The synchronized is modifier applicable for method and blocks but not for classes and variables.
 	If multiple thread try to operate simultaneously on the same Java object, we get data consistency problem. Example: ticket booking 
 	If a method or block is declared synchronized, then only one thread can operate on that method at a time on a given object.
+	The synchronized modifier is used to resolve data inconsistency issues.
 	The synchronized keyword also drastically decreases performances by increasing waiting time of the thread. If there is no requirement, then it is not recommended to use synchronized keyword.
 	
 	Every object in java has a unique lock. The synchronized keyword is implemented based on the lock.
@@ -416,5 +417,16 @@ Synchronization
 	Acquiring and releasing locks is internally taken care by JVM.
 	While a thread is executing synchronized method on a object, other threads are not allowed to execute other synchronized methods simultaneously on the same object. However, non synchronized methods do not have any constraint.
 	Lock concept is implemented based on object but not based on method.
-	Every object has 2 areas: a synchronized area and a non-synchronized area. The synchronized area can be accessed by only thread at a time whereas the non synchronized area can be accessed by any number of threads simultaneously.
-	
+	Every object has 2 areas: a synchronized area and a non-synchronized area. 
+	The synchronized area can be accessed by only thread at a time whereas the non synchronized area can be accessed by any number of threads simultaneously.
+	When one thread gets a chance to execute and it goes into sleeping state, JVM prevents other threads from executing when first thread completes.
+	Ex 
+	class ReservationSystem {
+		checkAvailability() {
+			// non synchronized
+		}
+		bookTickets() {
+			// synchronized
+		}
+	}
+
