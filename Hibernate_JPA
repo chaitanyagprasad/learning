@@ -292,4 +292,145 @@ Basic annotations
 
 	Another thing that needs to be taken care of is that the entity class must implement Serializable if you plan to store the entity in any cache, session, or you wish to transfer the entity over wire. 
 
+Creating auto generator column
+	An auto generated column can be achieved in many ways like 
+		Using a default generation strategy
+		Using a sequence generator
+		Using a table generator
+	To use a default strategy for autogeneration, we will use the @GeneratedValue annotation.
+	By default, hibernate uses the GenerationType.AUTO strategy if no strategy is supplied; so, @GeneratedValue is equal to @GeneratedValue(strategy=GenerationType.AUTO).
+	Still, as it is database–specific, it's the responsibility of the database to provide a value for this column, and the same rule is applied for @GeneratedValue(strategy=GenerationType.IDENTITY).
+	******************* complete this ***********************
+
+Working with collections
+	******************* complete this ***********************
+
+Unidirectional One-to-one mapping
+	In a one-to-one relationship, each row in the first table is linked to exactly one row in another table. If this relationship is applied, we can say that both the tables have an exactly equal number of rows any time.
+	Consider
+
+	@Entity
+	@Table(name = "passport_detail")
+	public class PassportDetail {
+
+		@Id
+		@GeneratedValue
+		@Column(name = "id")
+		private long id;
+
+		@Column(name = "passportno")
+		private String passportNo;	
+
+	}
+
+	@Entity
+	@Table(name = "person")
+	public class Person {
+
+		@Id
+		@GeneratedValue
+		@Column(name = "id")
+		private long id;
+
+		@Column(name = "name")
+		private String name;
+
+		@OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "passport_detail_id")
+		private PassportDetail passportDetail;
+
+	}
+
+	The @OneToOne annotation in the preceding code, hibernate will consider that we want to have a one-to-one relationship between both the tables
+	The cascade=CascadeType.ALL option in the @OneToOne annotation shows that hibernate uses cascading for all database operations. Here, we save a Person record, but before saving a Person object, it saves a PassportDetail object because PassportDetail is referred to by the Person object. If the PassportDetail object is not persisted at the time of saving the Person object, and the appropriate CascadeType option is not used, it throws an error.
+	The @JoinColumn annotation is used to define the relationship between tables—in our case, between the person table and a column created with the name "passport_detail_id"—and it refers to the primary key of the " "passport_detail " table, which is "id".
+	The above technique will achieve a unidirectional relationship. Only the parent table has information about the child and there is no way to fetch a child without the parent object.
+
+Bidirectional one-to-one mapping
+	The logic behind this technique is that each row in the parent table knows its child record identity, and each row from child table knows its parent record identity.
+	Consider
+
+	@Entity
+	@Table(name = "person")
+	public class Person {
+
+		@Id
+		@GeneratedValue
+		@Column(name = "id")
+		private long id;
+
+		@Column(name = "name")
+		private String name;
+
+		@OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "passport_detail_id")
+		private PassportDetail passportDetail;
+
+	}
+	
+	@Entity
+	@Table(name = "passport_detail")
+	public class PassportDetail {
+
+		@Id
+		@GeneratedValue
+		@Column(name = "id")
+		private long id;
+
+		@Column(name = "passportno")
+		private String passportNo;
+
+		@OneToOne(mappedBy = "passportDetail", cascade = CascadeType.ALL)
+		private Person person;
+
+	}
+
+	We added a person object in the child table to create a reference to the parent object. The same object was annotated with @OneToOne in the child table.
+
+One-to-one mapping using common join table.
+	In this method, we will use a third table that contains the relationship between the employee and detail tables. In other words, the third table will hold a primary key value of both tables to represent a relationship between them.
+	
+	@Entity
+	@Table(name = "employee")
+	public class Employee {
+
+	  @Id
+	  @GeneratedValue
+	  @Column(name = "employee_id")
+	  private long id;
+
+	  @Column(name = "name")
+	  private String name;
+
+	  @OneToOne(cascade = CascadeType.ALL)
+	  @JoinTable(
+		name="employee_detail"
+		, joinColumns=@JoinColumn(name="employee_id")
+		, inverseJoinColumns=@JoinColumn(name="detail_id")
+	  )
+	  private Detail employeeDetail;
+
+	}
+
+	@Entity
+	@Table(name = "detail")
+	public class Detail {
+
+	  @Id
+	  @GeneratedValue
+	  @Column(name = "detail_id")
+	  private long id;
+
+	  @Column(name = "city")
+	  private String city;
+	  
+	  @OneToOne(cascade = CascadeType.ALL)
+	  @JoinTable(
+		name="employee_detail"
+		, joinColumns=@JoinColumn(name="detail_id")
+		, inverseJoinColumns=@JoinColumn(name="employee_id")
+	  )
+	  private Employee employee;
+
+	}
 
