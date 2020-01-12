@@ -430,3 +430,88 @@ Synchronization
 		}
 	}
 
+	If there are two objects and two threads, where we pass one object to executing thread, then as soon as the thread procures the lock of its target object, it will start execution and irregular output will be observed.
+
+Case study:
+	Consider
+
+	public class Test {
+		public static void main(String[] args) {
+			Display d1 = new Display();
+			Display d2 = new Display();
+			MyThread t1 = new MyThread(d1,"Dhoni");
+			MyThread t2 = new MyThread(d2, "Yuvraj");
+			t1.start();
+			t2.start();
+		}
+	}
+
+	public class MyThread extends Thread {
+		Display d;
+		String name;
+		MyThread(Display d, String name) {
+			this.d = d;
+			this.name = name;
+		}
+		public void run() {
+			d.wish(name);
+		}
+	}
+
+	public class Display {
+		public synchronized wish(String name) {
+			System.out.print("Good morning");
+			try {
+				Thread.sleep(2000);
+				System.out.print(name)
+			}catch (InterruptedException e) {
+				System.out.print("interrupted");
+			}
+		}
+	}
+
+	Even though wish() is synchronized, we will get irregular output because threads are operating on different Java objects.
+	Synchronization is only required only when multiple threads operate simultaneously on a Java object.
+	If multiple threads are operating on multiple Java objects, then Synchronization is not required.
+
+Case 2:
+	Consider
+
+	public class Test {
+		public static void main(String[] args) {
+			Display d1 = new Display();
+			Display d2 = new Display();
+			MyThread t1 = new MyThread(d1,"Dhoni");
+			MyThread t2 = new MyThread(d2, "Yuvraj");
+			t1.start();
+			t2.start();
+		}
+	}
+
+	public class MyThread extends Thread {
+		Display d;
+		String name;
+		MyThread(Display d, String name) {
+			this.d = d;
+			this.name = name;
+		}
+		public void run() {
+			d.wish(name);
+		}
+	}
+
+	public class Display {
+		static synchronized wish(String name) {
+			System.out.print("Good morning");
+			try {
+				Thread.sleep(2000);
+				System.out.print(name)
+			}catch (InterruptedException e) {
+				System.out.print("interrupted");
+			}
+		}
+	}
+
+	If a thread wants to execute static synchronized method, the thread must acquire class level lock. 
+	This locking prevents multiple threads from executing the static synchronized methods to be executed from multiple locks.
+	In java there are only class level and object level locks.k
