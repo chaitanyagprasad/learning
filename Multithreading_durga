@@ -513,5 +513,12 @@ Case 2:
 	}
 
 	If a thread wants to execute static synchronized method, the thread must acquire class level lock. 
-	This locking prevents multiple threads from executing the static synchronized methods to be executed from multiple locks.
-	In java there are only class level and object level locks.k
+	This locking prevents multiple threads from executing the static synchronized methods to be executed from multiple threads.
+	In java there are only class level and object level locks.
+	Class level locks are released by the thread once the method execution is completed.
+	While a thread executes a static synchronized method, other threads are allowed to execute other static synchronized methods.
+	While a thread executes a static synchronized method, other threads are allowed to executed normal static methods on the class as no lock is needed to execute normal static method on class.
+	While a thread executes a static synchronized method, other threads are allowed to executed normal synchronized methods on the class as object level lock is needed to execute normal synchronized method on class.
+
+	
+
