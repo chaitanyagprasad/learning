@@ -1,0 +1,220 @@
+OCA objective Map
+    1. Java Basics
+        1.1 Define scope of variables
+        1.2 Define structure of Java class
+        1.3 Create executable Java application with main()
+        1.4 Import Java classes and make them accessible in your app
+        1.5 Compare and contrast features of Java
+    2. Working with Java data types
+        2.1 Declare and initialize variables
+        2.2 Differentiate between object references and primitives
+        2.3 Know how to read and write objet fields
+        2.4 Explain Object lifecycle
+        2.5 Use wrapper classes
+    3. Using operators and decision constructs
+    4. Creating and using Arrays
+        4.1 Declare, instantiate, initialize, and use a one-dimensional array
+        4.2 Declare, instantiate, initialize, and use multidimensional array. (sic)
+    5. Using loop constructs
+    6. Working with methods and encapsulation
+        6.2 Apply the static keyword to methods and fields.
+        6.3 Create and overload constructors; including impact on default constructors. (sic)
+        6.4 Apply access modifiers.
+    7. Working with inheritence
+        7.5 Use abstract classes and interfaces.
+    8. Exception handling
+    9. Working with selected classes from the Java API
+
+Features and Benefits of Java (OCA Objective 1.5)
+    Object oriented
+        OO design makes software easy to test and enhance.
+        OO design also makes it easy to think of software components as object with behaviour and state.
+    Encapsulation
+        Encapsulation allows a software component to hide its data from other components, protecting the data from being updated without the component’s approval or knowledge.
+    Memory managed Language
+        Java provides automatic memory management which is quiet complex and error prone if done programattically.
+        Further, tracking down bugs related to memory management (often called memory leaks) is a common, error-prone, and time-consuming process.
+    Huge library
+        Java has an enormous library of prewritten, well-tested, and well-supported code, which is easy to include and consume.
+    Secure by design
+        When compiled Java code is executed, it runs inside the Java Virtual Machine (JVM).
+        The JVM provides a secure “sandbox” for your Java code to run in, and the JVM makes sure that nefarious programmers cannot write Java code that will cause trouble on other people’s machines when it runs.
+    Cross platform execution
+        One of the goals (largely, but not perfectly achieved) of Java is that much of the Java code you write can run on many platforms.
+    Strongly typed Language
+        A strongly typed language usually requires the programmer to explicitly declare the types of the data and objects being used in the program.
+        Strong typing allows the Java compiler to catch many potential programming errors before your code even compiles.
+        Strong typing allows programmers to develop reliable, testable and production-quality code.
+    Multithreaded Language
+        Java provides built-in language features and APIs that allow programs to use many operating-system processes (hence, many “cores”) at the same time.
+        Multithreaded programming is never simple, but Java provides a rich toolkit to make it as easy as possible.
+    Distributed computing
+        Another way to tackle big programming problems is to distribute the workload across many machines.
+        The Java API provides several ways to simplify tasks related to distributed computing.
+        One such example is serialization, a process in which a Java object is converted to a portable form. Serialized objects can be sent to other machines, deserialized, and then used as a normal Java object.
+
+Identifiers and Keywords (OCA Objectives 1.2 and 2.1)
+    Legal Identifiers
+        Technically, legal identifiers must be composed of only Unicode characters, numbers, currency symbols, and connecting characters (such as underscores).
+        Identifiers must start with a letter, a currency character ($), or a connecting character such as the underscore (_).
+        Identifiers cannot start with a digit!
+        After the first character, identifiers can contain any combination of letters, currency characters, connecting characters, or numbers.
+        In practice, there is no limit to the number of characters an identifier can contain.
+        You can’t use a Java keyword as an identifier.
+    Oracle code conventions
+        Classes and interfaces 
+            The first letter should be capitalized, and if several words are linked together to form the name, the first letter of the inner words should be uppercase (a format that’s sometimes called “CamelCase”).
+            For interfaces, the names should typically be adjectives.
+        Methods
+            The first letter should be lowercase, and then normal CamelCase rules should be used. In addition, the names should typically be verb-noun pairs
+        Variables
+            Like methods, the CamelCase format should be used, but starting with a lowercase letter.
+        Constants
+            Java constants are created by marking variables static and final. They should be named using uppercase letters with underscore characters as separators:
+
+Define Classes (OCA Objectives 1.2, 1.3, 1.4, 6.4, and 7.5)
+    Source file declaration rules
+        There can be only one public class per source code file.
+        Comments can appear at the beginning or end of any line in the source code file.
+        There can be only one public class per source code file.
+        If the class is part of a package, the package statement must be the first line in the source code file.
+        If there are import statements, they must go between the package statement (if there is one) and the class declaration.
+        If there isn’t a package statement, then the import statement(s) must be the first line(s) in the source code file. If there are no package or import statements, the class declaration must be the first line in the source code file.
+        import and package statements apply to all classes within a source code file.
+        A file can have more than one non-public class.
+        Files with no public classes can have a name that does not match any of the classes in the file.
+    Using the javac and java Commands
+        The javac command is used to invoke Java’s compiler. You can specify many options when running javac.
+        General syntax => javac [options] [source files] => Both the [options] and the [source files] are optional parts of the command, and both allow multiple entries.
+        The java command is used to invoke the Java Virtual Machine (JVM).
+        General syntax => java [options] class [args] => The [options] and [args] parts of the java command are optional, and they can both have multiple values.
+        You must specify exactly one class file to execute, and the java command assumes you’re talking about a .class file, so you don’t specify the .class extension on the command line.
+        Consider => java -showversion MyClass x 1 => This command can be interpreted as “Show me the version of the JVM being used, and then launch the file named MyClass.class and send it two String arguments whose values are x and 1.”
+    Using public static void main(String[ ] args)
+        main() is the method that the JVM uses to start execution of a Java program.
+        As far as the compiler and the JVM are concerned, the main that is started by JVM is the main() with this signature => public static void main(String[] args)
+        Other versions of main() with other signatures are perfectly legal, but they’re treated as normal methods.
+        There is some flexibility in the declaration of the main() method: the order of its modifiers can be altered a little; the String array doesn’t have to be named args; and it can be declared using var-args syntax.
+        The valid declarations of main() are as follows
+            static public void main(String[] args)
+            public static void main(String... x)
+            static public void main(String[] someArray)
+        main() can be overloaded.
+    Import Statements and the Java API
+        Instead of using fully qualified names for classes, import statements are used in order to save some typing.
+        The fully qualified names consists of the package name followed by the class name. Import statements can be on the class level or package level.
+        If we want to import all the classes in a package, we need to append the import statement with a * symbol instead of the class name.
+    Static import statements
+        Sometimes classes will contain static members. Static class members can exist in the classes you write and in a lot of the classes in the Java API.
+        Static imports can be used when you want to “save typing” while using a class’s static members.
+        Consider
+        public class Test {
+            public static void main(String[] args) {
+                System.out.print(Integer.MAX_VALUE);
+            }
+        }
+
+        import static java.lang.Integer.MAX_VALUE;
+        import static java.lang.System.out;
+        public class Test {
+            public static void main(String[] args) {
+                out.print(MAX_VALUE);
+            }
+        }
+
+        Rules:
+            You must say import static; you can’t say static import.
+            If you do a static import for both the Integer class and the Long class, referring to MAX_VALUE will cause a compiler error, because both Integer and Long have a MAX_VALUE constant and Java won’t know which MAX_VALUE you’re referring to.
+            You can do a static import on static object references, constants, and static methods.
+            Using the * is valid only inside a specific package and class. It doesn’t work between directory. => import java.*; wont search the entire java package.
+    Class modifiers 
+        Access modifiers => public, private, protected
+        Non access modifiers => strictfp, final, abstract
+    Class access
+        When we say code from one class (class A) has access to another class (class B), it means class A can do one of three things:
+            Create an instance of class B
+            Extend class b or become subclass of class B.
+            Use or consume certain methods and members of class B.
+        In effect, access means visibility.
+    Default class access
+        A class with default access has no modifier preceding it in the declaration!
+        Think of default access as package-level access, because a class with default access can be seen/accessed only by classes within the same package.
+        When you see a question with complex logic, be sure to look at the access modifiers first.
+    Public class access
+        All classes in the Java Universe (JU) have access to a public class.
+        If a public class you’re trying to use is in a different package from the class you’re writing, you’ll still need to import the public class.
+    Non access class modifiers
+        You can modify a class declaration using the keyword final, abstract, or strictfp. These modifiers are in addition to whatever access control is on the class, so you could, for example, declare a class as both public and final.
+        strictfp 
+            Marking a class as strictfp means that any method code in the class will conform strictly to the IEEE 754 standard rules for floating points.
+        final
+            When used in a class declaration, the final keyword means the class can’t be subclassed. In other words, no other class can ever extend (inherit from) a final class, and any attempts to do so will result in a compiler error.
+            You should make a final class only if you need an absolute guarantee that none of the methods in that class will ever be overridden.
+            Marking a class final finished off any scope there is for the improvement of the class.
+            A final class obliterates a key benefit of OO—extensibility.
+        abstract
+            Marking a class abstract means that no instances of that particular class can be created. If we try to instatiate, we will get compile time error.
+            The sole purpose of an abstract class is to be subclassed by other classes.
+            An abstract class is mostly used to provide a base for subclasses to extend and implement the abstract methods and override or use the implemented methods in abstract class.
+            Non abstract classes have methods that end with curly braces.
+            In an abstract class, methods end with a semi-colon.
+            If one method is made abstract in a class, then the whole class must be made abstract.
+            Non abstract methods can be put in an abstract class and all subclasses will get the same implementation of the method.
+            The concrete subclasses get to inherit functionality and need to implement only the methods that define subclass-specific behavior.
+            You can’t mark a class as both abstract and final.
+
+Use Interfaces (OCA Objective 7.5)
+    Declaring an interface
+        When you create an interface, you’re defining a contract for what a class can do, without saying anything about how the class will do it.
+        Any concrete class type that implements an interface must agree to write the code for all the methods declared in the interface.
+        Interfaces can be implemented by any class, from any inheritance tree. This lets you take radically different classes and give them a common characteristic.
+        Think of a traditional interface as a 100 percent abstract class.
+        An abstract class can define both abstract and nonabstract methods, but an interface generally has only abstract methods.
+    Rules for declaring interfaces
+        Interface methods are implicitly public and abstract, unless declared as default or static.
+        All variables defined in an interface must be public, static, and final—in other words, interfaces can declare only constants, not instance variables.
+        Interface methods cannot be marked final, strictfp, or native.
+        An interface can extend one or more other interfaces.
+        An interface cannot extend anything but another interface.
+        An interface cannot implement another interface or class.
+        An interface must be declared with the keyword interface.
+        Interface types can be used polymorphically
+        The abstract modifier can be used while declaring an interface.
+    Rules for declaring interface methods.
+        All interface methods are implicitly public and abstract. Typing those two modifiers on interface methods is redundant.
+        All interface methods not declared default or static are public and abstract regardless of what you see in the interface definition.
+        Using final, private and protected modifiers on interface methods will result in compile time error.
+    Declaring Interface Constants
+        You’re allowed to put constants in an interface. By doing so, you guarantee that any class implementing the interface will have access to the same constant.
+        Interface constants must always be declared as => public static final, as interface constants are no different from any publically accessed constants.
+        Just because interface constants are defined in an interface, they don’t have to be declared as public, static, or final. They must be public, static, and final, but you don’t actually have to declare them that way.
+        Once the interface constant has been declared, its value cant be changed by any of the implementing classes.
+    Declaring default Interface Methods
+        A default method in an interface is one which can have an implementation in the interface itself and the same implementation will be inherited by the implementing classes.
+        default methods are declared by using the default keyword. 
+        The default keyword can be used only with interface method signatures, not class method signatures.
+        default methods are public by definition, and the public modifier is optional.
+        default methods cannot be marked as private, protected, static, final, or abstract.
+        default methods must have a concrete method body.
+    Declaring static Interface Methods
+        A static method is one which can be invoked directly without creating an instance. Interfaces can include static methods with concrete implementation.
+        static interface methods are declared by using the static keyword.
+        static interface methods are public by default, and the public modifier is optional.
+        static interface methods cannot be marked as private, protected, final, or abstract.
+        static interface methods must have a concrete method body.
+        When invoking a static interface method, the method’s type (interface name) MUST be included in the invocation.
+
+Declare Class Members (OCA Objectives 2.1, 2.2, 2.3, 4.1, 4.2, 6.2, 6.3, and 6.4)
+    Access Modifiers
+        Methods and non local variables can also be given access using the access and non access modifiers.
+        A class can use only public and default modifiers where as members can use protected and private in addition to public and default modifiers.
+        The class members get default access if no access modifier is specified.
+        If class A has access to a member of class B, it means that class B’s member is visible to class A. This implies that
+            Whether method code in one class can access a member of another class => this type of access is achieved using the dot operator.
+            Whether a subclass can inherit a member of its superclass => This type of access revolves around which, if any, members of a superclass a subclass can access through inheritance. If a subclass inherits a member, it’s exactly as if the subclass actually declared the member itself.
+        If class A itself can’t be accessed by class B, then no members within class A can be accessed by class B.
+
+
+Declare and Use enums (OCA Objective 1.2)
+
+
