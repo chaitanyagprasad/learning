@@ -286,6 +286,23 @@ Declare Class Members (OCA Objectives 2.1, 2.2, 2.3, 4.1, 4.2, 6.2, 6.3, and 6.4
                 System.out.print("x = "+x);     // prints 9
             }
         }
+    Local Variables and Access Modifiers
+        Access modifiers cannot be applied to local variables. Any code with access modifiers on local variables will not compile.
+        The only modifier that can be applied to a local variable is final.
+    Non access modifiers applied to methods.
+        final
+            The final keyword prevents a method from being overridden in a subclass and is often used to enforce the API functionality of a method.
+            Preventing a subclass from overriding a method stifles many of the benefits of OO, including extensibility through polymorphism.
+            Classes marked final can't be subclassed where are methods marked final in non final superclasses can't be overridden in the subclass.
+        final arguments
+            Method arguments are the variable declarations that appear in between the parentheses in a method declaration. Method arguments are essentially local variables to the method where they are declared.
+            Method arguments marked final cannot be assigned a new variable inside the method.
+        abstract
+        synchronized 
+        native 
+        strictfp
+
+
 
 
 
