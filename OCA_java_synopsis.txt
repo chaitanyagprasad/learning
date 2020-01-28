@@ -213,6 +213,81 @@ Declare Class Members (OCA Objectives 2.1, 2.2, 2.3, 4.1, 4.2, 6.2, 6.3, and 6.4
             Whether method code in one class can access a member of another class => this type of access is achieved using the dot operator.
             Whether a subclass can inherit a member of its superclass => This type of access revolves around which, if any, members of a superclass a subclass can access through inheritance. If a subclass inherits a member, it’s exactly as if the subclass actually declared the member itself.
         If class A itself can’t be accessed by class B, then no members within class A can be accessed by class B.
+    Public members
+        When a method or variable member is declared public, it means all other classes, regardless of the package they belong to, can access the member (assuming the class itself is visible).
+        For a subclass, if a member of its superclass is declared public, the subclass inherits that member regardless of whether both classes are in the same package.
+        If you see a method invoked (or a variable accessed) without the dot operator (.), it means the method or variable belongs to the class where you see that code. It also means that the method or variable is implicitly being accessed using the this reference.
+        The reference this always refers to the currently executing object—in other words, the object running the code where you see the this reference.
+    Private Members 
+        Members marked as private can be seen only from code inside the same class. Code outside the class can't access private members.
+        In case of inheritence, the subclass can't inherit a private member of a superclass. The private members of superclass stay hidden to the subclass.
+        A same member can be declared in a subclass. However, this is not equivalent to overriding a method. It is just declaring a new method.
+    Protected and Default Members
+        A default member may be accessed only if the class accessing the member belongs to the same package.
+        A protected member can be accessed (through inheritance) by a subclass even if the subclass is in a different package.
+        If the protected keyword is used to define a member, any subclass of the class declaring the member can access it through inheritance. It doesn’t matter if the superclass and subclass are in different packages; the protected superclass member is still visible to the subclass
+        The default behavior, which doesn’t allow a subclass to access a superclass member unless the subclass is in the same package as the superclass.
+        Whereas default access doesn’t extend any special consideration to subclasses, the protected modifier respects the parent-child relationship, even when the child class moves away into a different package.
+        So when you think of default access, think package restriction. But when you think protected, think package + kids. 
+        A class with a protected member is marking that member as having package-level access for all classes, but with a special exception for subclasses outside the package.
+        Consider a subclass in a different package. The subclass can inherit the protected member of a superclass but not access the same protected member via dot operator. example
+        
+        package cert;
+        public class Parent {
+            protected int x = 9;
+        }
+
+        package other;
+        public class Child extend Parent {
+            public void test() {
+                System.out.print("x = "+x);     //prints 9
+            }
+        }
+
+        package cert;
+        public class Parent {
+            protected int x = 9;
+        }
+
+        package other;
+        public class Child extend Parent {
+            public void test() {
+                Parent p = new Parent();
+                System.out.print("x = "+p.x);     //compile time error
+            }
+        }
+
+        Once the subclass-outside-the-package inherits the protected member, that member becomes private to any code outside the subclass, with the exception of subclasses of the subclass.
+    Default details
+        Consider
+
+        package cert;
+        public class Parent {
+            int x = 9; // default/package level access.
+        }
+
+        package other;
+        public class Child extend Parent {
+            public void test() {
+                System.out.print("x = "+x);     // compile time error.
+            }
+        }
+
+        Also consider 
+
+        package cert;
+        public class Parent {
+            int x = 9; // default/package level access.
+        }
+
+        package cert;
+        public class Child extend Parent {
+            public void test() {
+                System.out.print("x = "+x);     // prints 9
+            }
+        }
+
+
 
 
 Declare and Use enums (OCA Objective 1.2)
