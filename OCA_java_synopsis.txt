@@ -298,6 +298,22 @@ Declare Class Members (OCA Objectives 2.1, 2.2, 2.3, 4.1, 4.2, 6.2, 6.3, and 6.4
             Method arguments are the variable declarations that appear in between the parentheses in a method declaration. Method arguments are essentially local variables to the method where they are declared.
             Method arguments marked final cannot be assigned a new variable inside the method.
         abstract
+            An abstract method is a method that’s been declared (as abstract) but not implemented.
+            Abstract method contains no functional code.
+            An abstract method declaration doesn’t even have curly braces for where the implementation code goes, but instead closes with a semicolon.
+            You mark a method abstract when you want to force subclasses to provide the implementation.
+            It is illegal to have even a single abstract method in a class that is not explicitly declared abstract. You can have an abstract class with no abstract methods.
+            Clues to identify a non-abstract method
+                The method is not marked abstract.
+                The method declaration includes curly braces, as opposed to ending in a semicolon.
+                The method might provide actual implementation code inside the curly braces.
+            The first concrete subclass of an abstract class must implement all abstract methods of the superclass. Concrete means not abstract.
+            If you have an abstract class extending another abstract class, the abstract subclass doesn’t need to provide implementations for the inherited abstract methods. Only concrete subclasses need to implement the abstract methods.
+            Let us assume there are n-1 abstract classes in an inheritance tree and nth class is a concrete one. The concrete subclass must implement all the abstract methods defined in n-1 ancestors.
+            If the concrete subclass doesn’t implement all the abstract methods from its ancestors' superclasses, then we get compile time error.
+            A method can never, ever, ever be marked as both abstract and final, or both abstract and private.
+            abstract methods must be implemented whereas final method must not be overridden and private methods aren't even visible in the subclass.
+            The abstract modifier can never be combined with the static modifier as static methods are called without instance object and abstract methods dont have an implementation. 
         synchronized 
         native 
         strictfp
