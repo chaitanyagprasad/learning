@@ -315,9 +315,20 @@ Declare Class Members (OCA Objectives 2.1, 2.2, 2.3, 4.1, 4.2, 6.2, 6.3, and 6.4
             abstract methods must be implemented whereas final method must not be overridden and private methods aren't even visible in the subclass.
             The abstract modifier can never be combined with the static modifier as static methods are called without instance object and abstract methods dont have an implementation. 
         synchronized 
-        native 
+            The synchronized keyword indicates that a method can be accessed by only one thread at a time.
+            The synchronized modifier can be applied only to methods—not variables, not classes, just methods.
+            The synchronized modifier can be matched with any of the four access control levels.
+        native
+            The native modifier indicates that a method is implemented in platform-dependent code.
+            native can be applied only to methods.
+            Note that a native method’s body must be a semicolon (;) indicating that the implementation is omitted.
         strictfp
-
+            strictfp forces floating points (and any floating-point operations) to adhere to the IEEE 754 standard.
+            If you don’t declare a class as strictfp, you can still declare an individual method as strictfp.
+            A variable can never be declared strictfp. Only classes and methods can be declared strictfp.
+        Methods with Variable Argument Lists (var-args)
+            Java allows you to create methods that can take a variable number of arguments.
+            
 
 
 
