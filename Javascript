@@ -119,5 +119,64 @@ Window object
 
 Block scope with let and const
 	check whats with this
+
+
+
+
+
+
+Named and anonynmous Functions
+	To define a function we need 3 things
+		name
+		parameter names
+		body
+	In JavaScript there are no types in function either for the arguments or the return type.
+	Return statement exits the function immediately.
+	If there is nothing to return, the function returns undefined.
+
+Higher order functions
+	In JS functions are values. This means that 
+		we can store functions in variables.
+		we can pass functions to other functions as arguments.
+		we can return functions from functions.
+	The map method on the array takes a function as parameter
+		result = [0,1,4,9].map(Math.sqrt) // result = [0,1,2,3]
+
+Function literals
+	It is tedious to make function for small jobs. Consider
+		function multiplyBy10 (x) { return x * 10 }
+		result = [1,2,3,4].map(multiplyBy10)
+	The remedy for the above solution is function literals.
+		result = [1,2,3,4].map( function (x) { return x * 10 } ) // the function inside map is the function literals.
+	In JS there is no need for named functions.	We can have a function literal and that literal can always be assigned to a variable.
+
+Arrow functions.
+	Arrow functions are a compact form of function literals.
+		const average = (x,y) => (x+y)/2
+	There is no need to use the function and return keywords while writing arrow functions.
+	The parenthesis denote the arguments to the function and the expression to the right of the fat arrow denotes the return type of the function.
+	If we have only one parameter, we can exclude the parenthesis as well.
+		const square = x => x*x
+	If the function is not taking any parameter, then empty parenthesis is needed.
+		const dieToss = () => Math.trunc(Math.random()*6) + 1
+	If the body of a function is complicated, then arrow function must
+		include the multiple statements between a pair of curly braces
+		compulsarily include return statement
+
+		const indexOf = (arr,value) => {
+			for(const i in arr) {
+				if( arr[i] === value ) 
+					return i
+			}
+			return undefined
+		} 
+	If we are returning an object literal, then the object must be enclosed in a pair of parenthesis.
+		const stats = (x,y) => (
+			{
+				average: (x+y) / 2,
+				max: Math.max(x,y)
+			}
+		)
+	
 	
 	
