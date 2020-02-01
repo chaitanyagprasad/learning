@@ -177,6 +177,63 @@ Arrow functions.
 				max: Math.max(x,y)
 			}
 		)
+
+Functional programming
+	Functional programming is based on the concept of "What we want, not how we want"
+	Functional programming makes use of higher order function to achieve the task.
+
+Closures
+	Consider
+		setTimeout( () => console.log("hello") , 5000 ) // prints hello after 5 seconds of invokation.
+	Let us try to make the above implimentation more flexible
+		function sayLater(text, timeOut) {
+			const task = () => console.log(text); // closure
+			setTimeout(task,timeOut)
+		}
+		sayLater("hello",5000) // prints hello after 5 seconds of invoking sayLater
+	In the function sayLater, text is a parameter. The text parameter stays inside sayLater function even when the sayLater function has exited.
+	When a nested function references a variable, it captures that variable so that the nested function can use the variable in a later point in time. Such a nested function is called closure.
+	A closure has 3 parts.
+		A block of code. => const task = () => console.log(text);
+		parameters => no parameters used in the task function
+		"Free" variables, variables declared outside the function => text
+	A closure is a nested function that has capture some free variables from the surrounding scope.
+	Anything that is visible inside a scope can be used by the function from that scope. The only thing is that the function needs to have a reference to the variables it is going to consume.
+	In JavaScript, the actual variable is captured. Consider.
+		let text = "Goodbye"
+		setTimeout( () => console.log(text), 20000 )
+		text = "hello" // if this line is executed within 20 seconds of the above line, the above line will print hello instead of goodbye.
+	By the above example, we can conclude that in JS, the actual variable is captured in the closure.
 	
-	
+Arguments
+	When we call a function with a fewer arguments than what is defined, all the missing arguments are set to undefined and the function is executed.
+		function average(x,y) {
+			return y === undefined ? x : (x+y) /2;
+		}
+	Default arguments can be used in function. In the below example, if we dont call the function with 2 arguments and call with only one, the value of y will be defaulted to the value of x
+		function average(x,y = x) {
+			return (x+y) /2;
+		}
+	Multiple default arguments is supported in JS.
+		function average(x = 0,y = x) {
+			return (x+y) /2;
+		}
+	When a function is called with more parameters than declaration, the excess is ignored.
+	However, the excess parameters passed to a function can be captured in a parameter. This is called the rest parameter
+		function average(...args) { // syntax of rest parameter.
+			let sum = 0;
+			for(let x of args) {
+				sum+=x
+			}
+			return sum/Math.max(1,args.length);
+		}
+	In the above snip, we are telling to capture all the parameters supplied to average function and assign it to args array.
+	To the above average function definition, if we pass an array/iterable as value to args, we will get error as args will be an array of array whose size is one.
+		const numbers = [3,4,5]
+		const res = average(numbers) // error
+	In such a case, we need to use the spread operator to spread the elements.
+		const numbers = [3,4,5]
+		const res = average(...numbers)
+	Consider
+		const characters = [..."hello world"] // ['h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd' ]
 	
