@@ -236,4 +236,27 @@ Arguments
 		const res = average(...numbers)
 	Consider
 		const characters = [..."hello world"] // ['h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd' ]
-	
+
+Exceptions
+	In JS we use the throw statement to throw an exception.
+	We can throw any value but it is customary to throw an object produced by Error function.
+		function indexOf(arr,value) {
+			if(!Array.isArray(arr)) throw Error(message)
+			.. 
+		}
+	throw statement terminates the current function and its callers.
+	throw statement transfers the control to the catch or finally block.
+	Exception handling is done in order to signal to all the methods in the call stack about the unexpected error that has occured.
+	When an exception is thrown, it must be caught and handled. General syntax is as follows
+		try {
+			// risky code
+		}catch(e) {
+			// handling code
+		}
+	The variable e passed to the catch block contains the exception value. It is an error object.
+	Error object has name and message properties.
+	The best strategy to do exception handling in JS is to rethrow.
+	Rethrowing delegates the exception handling mechanism to the caller of the method.
+	The finally block is used to relinquish the resources.
+	The finally block is executed whether or not any exception occurs.
+	We must try not to use any return, break or throw statement in the finally block.
