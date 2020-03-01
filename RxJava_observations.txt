@@ -1,0 +1,97 @@
+Quick exposure to RxJava
+    In ReactiveX, the core type you will work with is the Observable.
+    A given Observable<T>pushes things of type T through a series of operators until it arrives at an Observer that consumes the items.
+    An Observable can push data or events from virtually any source, whether it is a database query or live Twitter feeds.
+    Consider
+        import io.reactivex.Observable;
+        public class Launcher {
+            public static void main(String[] args) {
+                Observable<String> myStrings =
+                Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon");
+            }
+        }
+    The Observable doesn't push until an Observer subscribes to the Observable. The above snip will work only if an Observer subscribes as follows
+        import io.reactivex.Observable;
+        public class Launcher {
+            public static void main(String[] args)  {
+                Observable<String> myStrings =
+                Observable.just("Alpha", "Beta", "Gamma", "Delta", "Epsilon");
+                myStrings.subscribe(s -> System.out.println(s)); // lambda is the observer.
+            }
+        }
+    What happened here is that our Observable<String> pushed each string object one at a time to our Observer, which we shorthanded using the lambda expression s -> System.out.println(s).
+    We can also use several operators between Observable and Observer to transform each pushed item or manipulate them in some way. Each operator returns a new Observable derived-off the previous one but reflects that transformation.
+    The key difference between Observable and Stream is that Observable pushes the items while Streams and sequences pull the items.
+    Since Observable is a push based pattern, we can use it to push data and events whereas the same is not available in Streams.
+
+How Observable works.
+    Observable is said to be at the bottom and the Observer is said to be at the top. The Observable pushes up from bottom to the Observer.
+    Observable works on a high level by passing 3 types of events.
+        onNext(): This passes each item one at a time from the source Observable all the way down to the Observer.
+        onComplete(): This communicates a completion event all the way down to the Observer, indicating that no more onNext() calls will occur.
+        onError(): This communicates an error up the chain to the Observer, where the Observer typically defines how to handle it.
+    These three events are abstract methods in the Observer type.
+
+Using Observable.create()
+    The Observable.create() factory allows us to create an Observable by providing a lambda receiving an Observable emitter.
+    We call the Observable emitter's onNext() method to pass emissions  (one a time) up the chain as well as onComplete() to signal completion and communicate that there will be no more items.
+    Ex
+        import io.reactivex.Observable;
+        public class Launcher {
+            public static void main(String[] args) {
+                Observable<String> source = Observable.create(emitter -> {
+                    emitter.onNext("Alpha");
+                    emitter.onNext("Beta");
+                    emitter.onNext("Gamma");
+                    emitter.onNext("Delta");
+                    emitter.onNext("Epsilon");
+                    emitter.onComplete();
+                });
+                source.subscribe(s -> System.out.println("RECEIVED: " + s)); // prints each string in a new line.
+            }
+        }
+    The onNext() method is a way to hand each item to the next step in the chain. 
+    The lambda on the Observer s -> System.out.println("RECEIVED: " + s) is called each time onNext() is called.
+    The onComplete() method is used to communicate up the chain to the Observer that no more items are coming. Technically, a source could stop emitting onNext() calls and never call onComplete().
+    We can catch the errors occuring in the Observable.create() and emit those errors to the Observer using the onError(). The error handling mechanism is always present in the Observer.
+    Ex
+        import io.reactivex.Observable;
+        public class Launcher {
+            public static void main(String[] args) {
+                Observable<String> source = Observable.create(emitter -> {
+                try {
+                    emitter.onNext("Alpha");
+                    emitter.onNext("Beta");
+                    emitter.onNext("Gamma");
+                    emitter.onNext("Delta");
+                    emitter.onNext("Epsilon");
+                    emitter.onComplete();
+                    } catch (Throwable e) {
+                        emitter.onError(e); // emitting any caught error to the observer
+                    }
+                });
+                source.subscribe(s -> System.out.println("RECEIVED: " + s),Throwable::printStackTrace);
+            }
+        }
+    It is not necessary that the Observable is handed over to the Observer directly. They can be handed to a chain of Observable operator.
+    Ex 
+        import io.reactivex.Observable;
+        public class Launcher {
+            public static void main(String[] args) {
+                Observable<String> source = Observable.create(emitter -> {
+                    try {
+                        emitter.onNext("Alpha");
+                        emitter.onNext("Beta");
+                        emitter.onNext("Gamma");
+                        emitter.onNext("Delta");
+                        emitter.onNext("Epsilon");
+                        emitter.onComplete();
+                    } catch (Throwable e) {
+                        emitter.onError(e);
+                    }
+                });
+                source.map(String::length) // returns Observable<Integer>
+                .filter(i -> i >= 5)       // returns Observable<Integer> after filteration 
+                .subscribe(s -> System.out.println("RECEIVED: " + s));
+            }
+        }
