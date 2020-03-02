@@ -4,6 +4,7 @@ Quick exposure to RxJava
     An Observable can push data or events from virtually any source, whether it is a database query or live Twitter feeds.
     Consider
         import io.reactivex.Observable;
+
         public class Launcher {
             public static void main(String[] args) {
                 Observable<String> myStrings =
@@ -12,6 +13,7 @@ Quick exposure to RxJava
         }
     The Observable doesn't push until an Observer subscribes to the Observable. The above snip will work only if an Observer subscribes as follows
         import io.reactivex.Observable;
+
         public class Launcher {
             public static void main(String[] args)  {
                 Observable<String> myStrings =
@@ -37,6 +39,7 @@ Using Observable.create()
     We call the Observable emitter's onNext() method to pass emissions  (one a time) up the chain as well as onComplete() to signal completion and communicate that there will be no more items.
     Ex
         import io.reactivex.Observable;
+
         public class Launcher {
             public static void main(String[] args) {
                 Observable<String> source = Observable.create(emitter -> {
@@ -56,6 +59,7 @@ Using Observable.create()
     We can catch the errors occuring in the Observable.create() and emit those errors to the Observer using the onError(). The error handling mechanism is always present in the Observer.
     Ex
         import io.reactivex.Observable;
+
         public class Launcher {
             public static void main(String[] args) {
                 Observable<String> source = Observable.create(emitter -> {
@@ -76,6 +80,7 @@ Using Observable.create()
     It is not necessary that the Observable is handed over to the Observer directly. They can be handed to a chain of Observable operator.
     Ex 
         import io.reactivex.Observable;
+
         public class Launcher {
             public static void main(String[] args) {
                 Observable<String> source = Observable.create(emitter -> {
@@ -95,3 +100,202 @@ Using Observable.create()
                 .subscribe(s -> System.out.println("RECEIVED: " + s));
             }
         }
+
+Using Observable.just()
+    Observable.just() is an alternative for Observable.create()
+    Ex
+        import io.reactivex.Observable;
+
+        public class Launcher {
+            public static void main(String[] args) {
+                Observable<String> checker = Observable.just("chai", "akki","thanos","sandy", "kaul");
+                checker.map(String::length)
+                    .filter(i -> i > 4)
+                    .subscribe(s -> System.out.println("Recieved: "+s)); // prints 6 and 5 for "thanos" and "sandy"
+            }
+        }
+    Observable.fromIterable() takes an iterable and emits them.
+    Ex  
+        import io.reactivex.Observable;
+        import java.util.Arrays;
+        import java.util.List;
+
+        public class Launcher {
+            public static void main(String[] args) {
+                List<String> names = Arrays.asList("chai", "akki","thanos","sandy", "kaul");
+                Observable<String> checker = Observable.fromIterable(names);
+                checker.map(String::length)
+                    .filter(i -> i > 4)
+                    .subscribe(s -> System.out.println("Recieved: "+s)); // prints 6 and 5 for "thanos" and "sandy"
+            }
+        }
+
+Observer interface
+    The onNext(), onComplete(), and onError() methods actually define the Observer type, an abstract interface implemented throughout RxJava to communicate these events.
+    The Observer interface definition is as shown below
+        package io.reactivex;
+
+        import io.reactivex.disposables.Disposable;
+
+        public interface Observer<T> {
+            void onSubscribe(Disposable d);
+            void onNext(T value);
+            void onError(Throwable e);
+            void onComplete();
+        }
+    Observers and source Observables are somewhat relative. In one context, a source Observable is where your Observable chain starts and where emissions originate.
+    The operators in the Observable chain have no idea from where the emissions are coming from.
+    Each Observable returned by an operator is internally an Observer that receives, transforms, and relays emissions to the next Observer downstream. It does not know whether the next Observer is another operator or the final Observer at the end of the chain.
+    Each operator, such as map() and filter(), also implements Observer internally.
+
+Implementing and subscribing to an Observer
+    When you call the subscribe() method on an Observable, an Observer is used to consume these three events by implementing its methods.
+    The following is an example where we implement the Observer interface and pass that observer instance to the Observable chain.
+        import io.reactivex.*;
+        import io.reactivex.disposables.Disposable;
+        import java.util.Arrays;
+        import java.util.List;
+
+        public class Launcher {
+            public static void main(String[] args) {
+                List<String> names = Arrays.asList("chai", "akki","thanos","sandy", "kaul");
+                Observable<String> checker = Observable.fromIterable(names);
+
+                Observer<String> myObserver = new Observer<String>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(String value) {
+                        System.out.println("Recieved "+value);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        System.out.println("Done");
+                    }
+                };
+                checker.subscribe(myObserver); // checker will emit as a chain and the onNext() will follow definition given in myObserver
+            }
+        }
+    We declare our Observer in advance and pass it to the subscribe() method at the end of our Observable chain.
+    The onNext() method receives each string emission and prints it using System.out.println("RECEIVED: " + value).
+    If an error did occur anywhere in our Observable chain, it will be pushed to our  onError() implementation on Observer.
+    When the source has no more emissions, it will call onComplete() up the chain all the way to the Observer, where its onComplete() method will be called and print Done! to the console.
+
+Shorthand Observers with lambdas
+    The subscribe() method is overloaded to accept lambda arguments for our three events.
+    The signature of subscribe() is => public final Disposable subscribe(Consumer<T> onNext, Consumer<Throwable> onError, Action onComplete).
+    Ex
+        io.reactivex.*;
+        import io.reactivex.functions.Action;
+        import io.reactivex.functions.Consumer;
+        import java.util.Arrays;
+        import java.util.List;
+
+        public class Launcher {
+            public static void main(String[] args) {
+                List<String> names = Arrays.asList("chai", "akki","thanos","sandy", "kaul");
+                Observable<String> checker = Observable.fromIterable(names);
+
+                Consumer<String> onNextConsumer = element -> System.out.println("Recieved: "+element);
+                Action onCompleteAction = () -> System.out.println("done");
+                Consumer<Throwable> onErrorConsumer = Throwable::printStackTrace;
+
+                checker.subscribe(onNextConsumer, onErrorConsumer, onCompleteAction); // prints the Observable one by one followed by done
+                checker.subscribe(onNextConsumer,onErrorConsumer); // prints the Observable one by one but doesnt print done as we haven't specified onComplete();
+                checker.subscribe(onNextConsumer); // prints the Observable one by one without any error handling.
+            }
+        }
+    Output
+        Recieved: chai
+        Recieved: akki
+        Recieved: thanos
+        Recieved: sandy
+        Recieved: kaul
+        done
+        Recieved: chai
+        Recieved: akki
+        Recieved: thanos
+        Recieved: sandy
+        Recieved: kaul
+        Recieved: chai
+        Recieved: akki
+        Recieved: thanos
+        Recieved: sandy
+        Recieved: kaul
+    Errors that happen anywhere in the Observable chain will be propagated to onError() to be handled and then terminate the Observable with no more emissions.
+    The subscribe() returns a Disposable. 
+
+Cold Observables  
+    Cold Observables are those which emit the same data to all its Observers. It is like a music CD which plays the same data to all the listeners.
+    Ex
+        import io.reactivex.*;
+        import io.reactivex.functions.Consumer;
+        import java.util.Arrays;
+        import java.util.List;
+
+        public class Launcher {
+            public static void main(String[] args) {
+                List<String> names = Arrays.asList("chai", "akki","thanos","sandy", "kaul");
+                Observable<String> checker = Observable.fromIterable(names);
+
+                Consumer<String> observer1 = element -> System.out.println("Observer 1 recieved: "+element);
+                Consumer<String> observer2 = element -> System.out.println("Observer 2 recieved: "+element);
+
+                checker.subscribe(observer1);
+                checker.subscribe(observer2);
+            }
+        } 
+    Output:
+        Observer 1 recieved: chai
+        Observer 1 recieved: akki
+        Observer 1 recieved: thanos
+        Observer 1 recieved: sandy
+        Observer 1 recieved: kaul
+        Observer 2 recieved: chai
+        Observer 2 recieved: akki
+        Observer 2 recieved: thanos
+        Observer 2 recieved: sandy
+        Observer 2 recieved: kaul
+    Any operators between the Observable and the observer will maintain the cold nature of the Observable.
+    Ex
+        import io.reactivex.*;
+        import io.reactivex.functions.Consumer;
+        import java.util.Arrays;
+        import java.util.List;
+
+
+        public class Launcher {
+            public static void main(String[] args) {
+                List<String> names = Arrays.asList("chai", "akki","thanos","sandy", "kaul");
+                Observable<String> checker = Observable.fromIterable(names);
+
+                Consumer<String> observer1 = element -> System.out.println("Observer 1 recieved: "+element);
+                Consumer<Integer> observer2 = element -> System.out.println("Observer 2 recieved: "+element);
+
+                checker.subscribe(observer1);
+                checker.map(String::length).subscribe(observer2);
+            }
+        }
+    Output
+        Observer 1 recieved: chai
+        Observer 1 recieved: akki
+        Observer 1 recieved: thanos
+        Observer 1 recieved: sandy
+        Observer 1 recieved: kaul
+        Observer 2 recieved: 4
+        Observer 2 recieved: 4
+        Observer 2 recieved: 6
+        Observer 2 recieved: 5
+        Observer 2 recieved: 4
+
+
