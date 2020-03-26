@@ -1,0 +1,74 @@
+Problems with EJB model
+    EJB model forced developers to implement interfaces from EJB framework. This created tight coupling between the component and EJB framework.
+    Testing EJB was impossible outside the EJB container.
+    Deployment process was cumbersome.
+    EJB apps were coupled tightly to the environment as well.
+    EJB model could not harness the OOP model of Java.
+
+Benefits of POJO model.
+    Coding is fast and simple as there is no dependency, interface implementation or extend from framework classes.
+    Transfer of POJO classes over network is easy as there is no dependency on framework code.
+    No need to deploy the POJO classes into container to test them.
+    POJO keeps the flavor of OOP.
+
+Need for lightweight containers.
+    There is lot of boilerplate code while developing Java apps. They are
+        Handling database connections outside the application codebase
+        Enabling pooling capabilities, if necessary
+        Performing transaction management with declarative means
+        Working with a ready-to-use transaction management infrastructure
+        Creating and wiring of components in the application
+        Applying security constraints on the system
+        Dealing with thread and scheduling issues
+    While we can code all of this without containers, creating & wiring of componens and all of the middleware services must be handled by the developer themselves.
+    The above tasks are cumbersome and distract the developer from the business requirements and delay completion.
+    Hence we need containers. Containers is an environment where components of an application will be created and wired and all middleware services are provided.
+
+Expectations from a container.
+    Life-cycle management of components
+    Dependency resolution
+    Component lookup
+    Application configuration
+    Transaction management
+    Security
+    Thread management
+    Object and resource pooling
+    Remote access for components
+    Management of components through a JMX-like API
+    Extendibility and customizability of container
+    A lightweight container includes all of these features, but doesn't require application code to depend on its own API.
+
+Inversion of control
+    One of the most important benefits containers that provide with components they manage is pluggable architecture. The job of a container is to create those components and their dependent services and wire them together.
+    Dependent components are never instantiated using a new operator within component classes. They are injected into the component by the container instance at run time.
+    The control of dependencies is moved out of components to the container. This pattern, therefore, is called Inversion of Control, or IoC for short.
+    IoC is one of the fundamental features that is expected to be provided by any container. It has basically two forms: 
+        dependency lookup 
+        dependency injection.
+    In dependency lookup, the container provides callback methods to the components it manages, and the components interact with the container and acquire their dependencies explicitly within those callback methods.
+    In dependency injection, components are provided with suitable constructors or setter methods so that the container can inject dependent components. Most of the time dependencies are injected during creation of components through those methods.
+    It is the job of the container to process the configuration information provided to the container to instantiate necessary components and wire up their dependencies at run time.
+
+Dependency injection(DI)
+    The fundamental principle of dependency injection is that application objects should not be responsible for looking up the resources or collaborators on which they depend. Instead, an IoC container should handle object creation and dependency injection, resulting in the externalization of resource lookup from application code to the container.
+    Benefits of DI are as follows
+        Lookup logic is completely removed from application code, and dependencies can be injected into the target component in a pluggable manner.
+        Unit testing of such components becomes very easy because there is no environmental dependency, and dependent components can easily be mocked and wired up to the component in the test case.
+        Configuration of the application for different environments also becomes very easy and achievable without code modification because no concrete class dependencies exist within components.
+        There is no dependence on the container API. Code can be moved from one container to another, and it should still work without any modification in the codebase.
+        There is no requirement to implement any special interfaces at all.
+        Written classes are just plain Java objects, and it is not necessary to deploy those components to make them run.
+    There are 2 ways to achieve DI 
+        Setter injection
+        Constructor injecion
+
+Setter injecion
+    The setter methods are invoked immediately after the object is instantiated by the container. The injection occurs during the component creation or initialization phase, which is performed much earlier in the process than handling business method calls.
+    The most important advantage of setter injection is that it allows re-configurability of the component after its creation. The component's dependencies can be changed at run time.
+    The biggest disadvantage of setter injection is that not all necessary dependencies may be injected before use, which leaves the component in a partially configured state.
+
+Constructor injecion
+    With constructor injection, beans express their dependencies via constructor arguments. In this method, dependencies are injected during component creation.
+    The biggest advantage of constructor injection is that each managed component in the container is guaranteed to be in a consistent state and ready to use after it is created.
+    The biggest disadvantage of constructor injection is that it won't be possible to reconfigure components after their creation unless they provide a setter for those properties given as constructor arguments.
+    
