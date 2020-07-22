@@ -1,0 +1,149 @@
+Certification Objective 1: Java Basics
+    Lesson 1.1: Define the scope of variables
+        1.1.1: Meaning of scope, curly braces and blocks
+            Scope of the variable is the area in the program where the variable is seen by its simple name.
+            If a variable is been accessed by a class name or by an object reference, then that variable is not considered to be in scope.
+            Consider the following snip of code 
+                public void doStuff() {
+                    int i;
+                    // some code
+                    // some code
+                    double d;
+                    {
+                        float f;
+                    }
+                }
+            In the above snip, the scope of the variables begin with the declaration and end with closing curly brace of the block that encloses the declaration.
+
+        1.1.2: Special cases of the scope   
+            Under certain circumstances, the scope of a variable might be, inside a block, even though the declaration is outside the block, coming just before it.
+            The two basic conditions under which this will occur are for a) simple for loops and also for b) the formal parameters of a method.
+
+    Lesson 1.2: Define the structure of the Java class.
+        1.2.1: Java class files, its content and naming.
+            Essentially there are three things that you'll find in a Java class file.
+                Package statement: defines the package that the class/interface belongs to.
+                Import statement: import statements can be one or more.
+                The code itself: We can have one or more classes. Multiple classes can be declared under special conditions. We can have interfaces as well.
+            The package is essentially like a family name. 
+            If 2 classes are in the same package, they can refer to each other just by their class names.
+            If 2 classes are in different packages, they have to be referred to each other by they fully qualified name ie package_name.class_name
+            2 classes in different packages can become friends if there is an import statement which had the fully qualified class name. In that case the first class can refer to the other by just its name.
+            Rule: There must be only one public class per source file and its name must exactly match the name of the source file.
+            Rule: The name of the package inside which a public class is in must match the directory structure in which the public class is stored in.
+            Every class written in java will have a corresponding .class file generated irrespective of the fact whether the class was a public class written in a source file or a non-public class written in some other class' source file.
+
+        1.2.2: Java classes, the class, the member variables, methods and constructors. 
+            Java class can contain several things.
+                Variables (state): static and non static variables
+                Methods (Behavior): static and non static methods
+                constructor: A special method whose job is to initialize the variables of the class.
+                A class inside a class.
+            Java classes can be marked with the public identifier. Any class named public can be accessed from any other class in the Java program. 
+            A class without the public identifier can be accessed from classes belonging to the same package as the non-public class.
+            A class can also be marked abstract. Any class that is marked abstract cannot have instances created.
+            The most important use of an abstract class is to serve as a base class from which subclasses are derived from it.
+            The declaration order does not matter inside of a class but matters inside of a method.
+            Constructor does not have a return type. The name of the constructor matches that of the class.
+
+    Lesson 1.3: Creating executable Java application with the main(), running Java apps from cmd line, including console output
+        1.3.1: Create executable Java application with the main()
+            The main() is the entry point of every Java program.
+            Only the main() with the signature -> public static void main(String[] args) will serve as the entry point to the Java program.
+            The main() is made public because its going to be called by the JVM and not any other code in the program.
+            The main() will be part of some class. The static keyword gives main() the ability to be invoked without any instance of the class which the main() is a part of.
+            The static keyword is also important because when the JVM starts an app, it doesn't create instances of any class. It directly jumps into the main().
+            The void keyword specifies what the main returns. This is void because, like other languages, exit from the main doesn't necessarily mean the exit from the program.
+            Java doesn't return a status code from main() to the OS. This can be done by System.exit(statusCode)
+            The argument list for this method is a single array of strings. There are 2 ways to declare this single array of strings.
+                String[] args
+                String ...args
+            The main() is selected by JVM as the entry point to start execution.
+            The main() can be overloaded.
+
+        1.3.2: Running Java from the cmd line
+            A Java program is run inside the JVM and the JVM is the program that runs on the OS.
+            Hence to run a Java program from the cmd line we must issue the following command
+                java <fully_qualified_class_name_in_which_main_is_present> <arguments_separated_by_space>
+            We must make sure that fully_qualified_class_name_in_which_main_is_present is compiled using the javac command
+
+        1.3.3: Managing the classpath
+            It is not necessary that we traverse through to the directory where the compiled class is present in order to invoke the java command. 
+            Now in the last example, fully_qualified_class_name_in_which_main_is_present will give directory root. But user must specify to Java where to look for the directory.
+            The list of places specified by the user to look for a particular package is called as classpath.
+            To specify the class path, we can use -cp command, which is an optional command with the java command as follows
+                java -cp <path_to_the_folder_containing_classes> <fully_qualified_class_name_in_which_main_is_present> <arguments_separated_by_space>
+            The classpath can also be specified as an environment. The downside of specifying an environment variable is that same classpath will be used for different projects which is not desirable.
+            The classpath can have multiple elements. The colon(:) is the character used as a separator.
+            JAR files and zip files also can be specified in the classpath.
+            <NEEDS TO BE REVISITED>
+
+        1.3.4: Working with the console output
+            <NEEDS TO BE REVISITED ENTIRELY>
+
+    Lesson 1.4: Import other packages and making them accessible in our code.
+        1.4.1: Packages and their purposes
+            A package is a group of related classes. 
+            When we want to use classes from different packages inside our code, we can do this in 2 ways.
+                a) Use the fully qualified names of the objects from different packages in our code
+                b) Use the import statement and use only the class name in the code.
+            The sole purpose of an import statement is only to save some typing and clean up the source file.
+            
+        1.4.2: Statement order, wildcard imports, importing subpackages, handling duplicate class names
+            Package statement must be written first. This is optional.
+            After the package statement, we must include the import statement. There can be any number of import statements.
+            The import statements will be followed by code ie any class or interface.
+            If we want to import all classes from a package, we can use a wildcard to do so. Ex import java.util.* will import all classes present in the java.util package.
+            There is no partial import of packages. We either import a particular class from a package or the entire package.
+            When it comes to packages, then packageOne != packageOne.subPackage
+            Assume there are 2 different classes with the same name but in different packages, which we want to use in our code. This will cause an ambiguous import. 
+            We can deal with ambiguous import as follows
+                a) use the fully qualified name for both the classes
+                b) Import one and use the short name for the imported class and use fully qualified name for the other.
+
+    Lesson 1.5: Compare and contrast the features and components of Java
+        1.5.1: Understanding the Java execution model
+            A compiled language is one where the programmer writes the source code then translates the source code into a binary and executes the binary directly on the target CPU.
+            Different compiler are needed to produce binaries for different OS and CPU.
+            In an interpreted language, the programmer feeds the source code directly to the interpreter and the interpreter reads the code line-by-line and behaves as the code.
+            With a suitable interpreter, we can run the same source on different combination of hardware and OS.
+            In interpreted language, the source must be understood and executed at the same time. This lead to performance issues in interpreted languages.
+            Java binary code on the other hand is not executed on the CPU directly but is executed inside the JVM.
+            Executing the Java binary inside the JVM brings to the table of platform independence to Java code.
+            JVM is a software that simulates what a real CPU hardware does.
+            JVM has variables to represent the state of CPU registers and simple instructions to manipulate that state.
+            The source is compiled to produce a binary. Binary is easily readable by the JVM for effective computation.
+            JVM beahves like an universal interpreter and hence brings in platform independence.
+            JVM can help do runtime optimization of code which is not possible in static analysis.
+
+        1.5.2: Understanding the value of threading and garbage collection
+            The garbage collector takes most of the responsibility for releasing memory and creates a simple, easy-to-use model for the programmer.
+            The GC looks at memories periodically and determines whether a particular memory has a reference to it or not.
+            If a memory is not having a reference, the GC will reclaim the memory and adds it back to the heap.
+            If memory is released by an object and the programmer tries to reuse the same memory, we get NullPointerException. This is easily reproducable. 
+        
+        1.5.3: Understanding the value of object orientation and encapsulation
+            Java is object oriented language
+
+Certification Objective 2: Working With Java Data Types
+
+Certification Objective 3: Using Operators and Decision Constructs 
+
+Certification Objective 4: Creating and Using Arrays 
+
+Certification Objective 5: Using Loop Constructs 
+
+Certification Objective 6: Working with Methods and Encapsulation 
+
+Certification Objective 7: Working with Inheritance
+
+Certification Objective 8: Handling Exceptions 
+
+Certification Objective 9: Working with Selected classes from the Java API 
+    Lesson 9.1: Manipulate data using the StringBuilder class and its methods
+    Lesson 9.2: Create and manipulate Strings
+    Lesson 9.3: Create and manipulate calendar data using classes from java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period
+    Lesson 9.4: Declare and use an ArrayList of a given type
+    Lesson 9.5: Write a simple Lambda expression that consumes a Lambda Predicate expression
+
+
