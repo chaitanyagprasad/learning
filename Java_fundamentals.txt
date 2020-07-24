@@ -1,0 +1,95 @@
+Chapter 1: Java fundamentals:
+    History and motives behind the Java design
+        Java was founded in 1991 at Sun Microsystems.
+        Compiled Language:
+            Source code gets compiled to binary using an intermediate program called the compiler. 
+            Binary is executed on the processor.
+            Binary generated after compilation is OS and processor specific.
+            We need a specific compiler for a given OS and processor. Writing compilers is a expensive task.
+            Advantages of compiled language is speed of execution as binary is straight away understood by the processor
+            Disadvantage of compiled Language is that we need to have different compiler for different OS and processor components.
+
+        Interpreted language:
+            The source code is fed into a program called the interpreter. 
+            The interpreter reads the instructions one by one and executes on target processor.
+            The interpreter is not OS or processor specific.
+            Advantages of interpreted langiage is that there is no overhead of developing different interpretors for different OS or processors.
+            Disadvantage of interpreted language is that since the interpretor has to execute the instructions, there is reduced speed.
+        
+        Java has close ancestry with C and C++. Syntax is borrowed from C and OOP features is taken from C++.
+        What Java did different from C or C++, which are traditional compiled languages, is that Java tried to have a generic binary compiled file that can be executed independent of the platform.
+        In traditional compiled languages, the output after compilation is a executable which is run directly on the target processor.
+        In case of Java, the output of the Java compiler is something called a bytecode. The bytecode is not run on the direct on target processor but is run inside the JVM.
+        JVM is a software program which is responsible for the execution of the Java bytecode. JVM is a secure sandbox where the instruction of the bytecode are read and they are passed on to the processor.
+
+        High level features of Java 
+            Simple: feature are concise, cohesive to learn and use
+            Secure: Since java programs run inside the JVM, it makes a secure run of the program.
+            Portable: Java code can be run on any device from mobile to toaster
+            OO Based: Java follows the OO model of programming. <More on that in the corresponding module>
+            Robust: In Java, much of the error can be caught before the compilation is done. 
+            Multithreaded: Java has extensive pre-existing library for carry multithreading.
+            Architecture neutral: Running of Java program is not dependent on the OS and processor of the machine.
+            Interpreted: Java simulates interpreted execution model inside the JVM.
+        
+        Java Development Kit (JDK)
+            JDK is a software distribution required to develop and execute Java programs.
+            JDK = (javac + java) + JRE + JVM
+            javac is the Java compiler. It is responsible to convert the source code in to the Java bytecode.
+            java is the Java interpretor. It is responsible to execute the instructions in the Java bytecode.
+            JRE is a set of library written by the original Java developers to ease programming in Java.
+
+        Program 1.1:
+
+            /*
+                name the file as Example.java
+
+            */
+            public class Example {
+                // java program begins at this point
+                public static void main(String[] args) {
+                    System.out.println("Hello, world!");
+                }
+            }
+
+            To compile the program, we have to use the javac command along with the full file name as the input to the compiler.
+            To run the program, we have to pass the compiled .class file into the java interpretor to see the output.
+        
+        Dissection of program 1.1
+            Speak about comments: multi line and single line comments
+            Speak about class:
+                Class is a blueprint of a real world object in the Java space.
+                Everything in Java will be written in a class
+                Whatever is written inside the curly braces of a class are called as members of the class.
+                The members can be two things: variables and method.
+            Speak about main():
+                public keyword
+                static keyword
+                String type
+                System.out.println();
+        
+        Program 1.2:
+
+            public class Example2 {
+                public static void main(String[] args) {
+                    int x;
+                    int y;
+
+                    x = 10;
+
+                    System.out.println("The value of x "+x);
+                    y = x / 2;
+
+                   System.out.println("The value of y " + y);
+                   System.out.println("The value of after division x "+x);                     
+                }
+            }
+        
+        Dissection of 1.2
+            Speak about variables
+            Speak about type of variables
+            Speak about how to declare a variable.
+            The int data type
+            Speak about differences between println() and print()
+
+
