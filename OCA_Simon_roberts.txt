@@ -141,6 +141,28 @@ Certification Objective 8: Handling Exceptions
 
 Certification Objective 9: Working with Selected classes from the Java API 
     Lesson 9.1: Manipulate data using the StringBuilder class and its methods
+        9.1.1: Understanding the common constructors of the StringBuilder class
+            The StringBuilder class is one of several facilities that Java provides to allow our code to work with text.
+            The StringBuilder class represents text well, and that text can easily be moved in and out of plain string objects.
+            The main reason for using the StringBuilder instead of just going with a string, a StringBuilder object allows us to represent text that can change. This is better in contrast with the immutable nature of the String object itself.
+            There are 4 constructors of the StringBuilder class:
+                public StringBuilder(String s);
+                public StringBuilder(CharSequence cs);
+                public StringBuilder(int i);
+                public StringBuilder();
+            Why is there an integer argument to the StringBuilder class?
+                Inside of StringBuilder class, we have char array. Every String is going to be stored as the char array.
+                Also in the StringBuilder class, there is an int field that holds the index of the first empty element of the char array.
+                Suppose there arises a situation where we have to add a String whose length crosses the length of the initially created char array. 
+                In such a situation, the resizing of the char array puts a load on the GC and causes a performance overhead.
+                Hence if we know what is the size of the String we are going to put, we can avoid the performance overhead on the GC.
+            Never allocate a higher sized char array unnecessarily.
+        
+        9.1.2: Using methods of the StringBuilder class
+            append(boolean b) : Appends the string representation of the boolean argument to the sequence.
+            append(char[] str, int offset, int len) : Appends the string representation of a subarray of the char array argument to this sequence.
+            
+
     Lesson 9.2: Create and manipulate Strings
     Lesson 9.3: Create and manipulate calendar data using classes from java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period
     Lesson 9.4: Declare and use an ArrayList of a given type
