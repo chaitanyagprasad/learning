@@ -87,7 +87,9 @@ Chapter 1: Java fundamentals:
         
         Dissection of 1.2
             Speak about variables
-            Speak about type of variables
+                A variable is a named memory location that can be assigned a value. 
+                The value of a variable can be changed during the execution of a program.
+                The kind of values that a variable can hold must be specified.
             Speak about how to declare a variable.
             The int data type
             Speak about differences between println() and print()
