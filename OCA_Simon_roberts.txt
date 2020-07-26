@@ -160,8 +160,96 @@ Certification Objective 9: Working with Selected classes from the Java API
         
         9.1.2: Using methods of the StringBuilder class
             append(boolean b) : Appends the string representation of the boolean argument to the sequence.
+                boolean b = true;
+                StringBuilder sb = new StringBuilder("b is ");
+                sb.append(b);
+                System.out.println(sb); // b is true
+
             append(char[] str, int offset, int len) : Appends the string representation of a subarray of the char array argument to this sequence.
+                StringBuilder sb1 = new StringBuilder("Hello");
+                StringBuilder sb2 = new StringBuilder("this is the world calling");
+                sb1.append(sb2,11, 17); // 11 is start and start is 0 based. 17 is index of first element not to be included
+                System.out.println(sb1); // Hello world
+
+            delete(int start, int end); Removes the characters in a substring of this sequence.
+                StringBuilder sb = new StringBuilder("This is not good");
+                sb.delete(7,11); // 7 is index of the first element to be deleted and 11 is the the index of the element not to be deleted.
+                System.out.println(sb); // This is good
+
+            insert(int offset, String str): Inserts the string into this character sequence.
+                StringBuilder sb = new StringBuilder("This is good");
+                sb.insert(8," very"); // 8 is the 0 based index where the string following the 8 must be inserted.
+                System.out.println(sb); // This is very good
+
+            replace(int start, int end, String str): Replaces the characters in a substring of this sequence with characters in the specified String
+                StringBuilder sb = new StringBuilder("This is good");
+                sb.replace(5,7,"was very"); // 5 is the 0 based index where the string following the 8 must be inserted.
+                System.out.println(sb); // This was very good
+
+            reverse(): Causes this character sequence to be replaced by the reverse of the sequence.
+                StringBuilder sb = new StringBuilder("!bargainS");
+                sb.reverse();
+                System.out.println(sb); // Sniagrab!
             
+            setCharAt(int index, char ch): The character at the specified index is set to ch.
+                StringBuilder sb = new StringBuilder("Tee");
+                sb.setCharAt(2, 'a');
+                System.out.println(sb); // Tea
+
+            setLength(int newLength): Sets the length of the character sequence. When length is set to a value greater than the length of the text the StringBuilder is initially holding, the method appends blankspaces for the remaining amount
+                StringBuilder sb = new StringBuilder("This is text that rambles on needlessly");
+                sb.setLength(12);
+                System.out.println("setLength when length is less than the length in the text => "+sb); // This is text
+                sb = new StringBuilder("This is text that rambles on needlessly");
+                sb.setLength(sb.length()); // This is text that rambles on needlessly
+                System.out.println("setLength when length is equal the length in the text => "+sb);
+                sb = new StringBuilder("This is text that rambles on needlessly");
+                sb.setLength(sb.length()+5);
+                System.out.println("setLength when length is greater than the length in the text => "+sb); This is text that rambles on needlessly     
+
+            substring(int start): Returns a new String that contains a subsequence of characters from index denoted by start to the end of the string.
+                StringBuilder sb = new StringBuilder("This is text that rambles on needlessly");
+                String s = sb.substring(8);
+                System.out.println(s); // text that rambles on needlessly       
+
+            substring(int start, int end) : end denotes the index of the first character to be left out of the substring
+                StringBuilder sb = new StringBuilder("This is text that rambles on needlessly");
+                String s = sb.substring(8, 12);
+                System.out.println(s); // text
+
+            charAt(int index): Returns the char value in this sequence at the specified index.
+                StringBuilder sb = new StringBuilder("0123456789");
+                char s = sb.charAt(8);
+                System.out.println(s); // 8
+                System.out.println(sb.charAt(25)); // StringIndexOutOfBoundsException
+
+            getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin): Characters are copied from this sequence into the destination character array dst.
+                StringBuilder sb = new StringBuilder("0123456789");
+                char[] dest = new char[20];
+                for(int i = 0; i < dest.length; i++) {
+                    dest[i] = '+';
+                }
+                sb.getChars(3,7,dest,4);
+                System.out.println(dest); // ++++3456++++++++++++
+            
+            indexOf(String str): returns the index of str found in the StringBuilder object
+                StringBuilder sb = new StringBuilder("Here, there, where");
+                System.out.println(sb.indexOf("here")); // 7
+            
+            indexOf(String str, int fromIndex): returns the first indec of str from fromIndex
+                StringBuilder sb = new StringBuilder("Here, there, where");
+                System.out.println(sb.indexOf("here", 9)); // 14
+
+            lastIndexOf(String str): works as indexOf but in reverse
+                StringBuilder sb = new StringBuilder("Here, there, where");
+                System.out.println(sb.lastIndexOf("here")); // 14
+
+            length(): returns the character count in the StringBuilder
+                StringBuilder sb = new StringBuilder("0123456789");
+                System.out.println(sb.length()); // 10
+            
+            ensureCapacity(int minimumCapacity):
+            trimToSize()
 
     Lesson 9.2: Create and manipulate Strings
     Lesson 9.3: Create and manipulate calendar data using classes from java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period
