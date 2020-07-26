@@ -250,6 +250,10 @@ Certification Objective 9: Working with Selected classes from the Java API
             
             ensureCapacity(int minimumCapacity):
             trimToSize()
+    
+    Lesson 9.2: Creating and manipulating string.
+        9.2.1: Creating String
+            String s = "Hello, world!"; // assigning a string literal to a string variable.
 
     Lesson 9.2: Create and manipulate Strings
     Lesson 9.3: Create and manipulate calendar data using classes from java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period
